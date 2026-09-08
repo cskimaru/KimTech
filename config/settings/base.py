@@ -105,6 +105,6 @@ COMPANY_NAME = "BEKA Ltd"
 COMPANY_LOCATION = "Nairobi, Kenya"
 COMPANY_TAGLINE = "Multi-Cloud Engineering & Data Protection, Delivered as a Service"
 COMPANY_EMAIL = env("CONTACT_NOTIFY_EMAIL", default="info@beka.co.ke")
-COMPANY_PHONE = "+254 700 000 000"
+COMPANY_PHONES = ["+254 702 857 036", "+81 70-5659-9911"]
 
 LOGIN_URL = "admin:login"

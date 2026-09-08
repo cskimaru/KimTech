@@ -62,7 +62,9 @@
       <div>
         <h3>Get in touch</h3>
         <a href="mailto:{{ COMPANY_EMAIL }}">{{ COMPANY_EMAIL }}</a>
-        <a href="tel:{{ COMPANY_PHONE }}">{{ COMPANY_PHONE }}</a>
+        {% for phone in COMPANY_PHONES %}
+        <a href="tel:{{ phone|cut:' '|cut:'-' }}">{{ phone }}</a>
+        {% endfor %}
         <a href="{% url 'contact' %}">Contact form</a>
       </div>
       <div>

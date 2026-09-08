@@ -37,7 +37,11 @@
     <aside class="contact-info">
       <h2>Other ways to reach us</h2>
       <p><strong>Email</strong><br><a href="mailto:{{ COMPANY_EMAIL }}">{{ COMPANY_EMAIL }}</a></p>
-      <p><strong>Phone</strong><br><a href="tel:{{ COMPANY_PHONE }}">{{ COMPANY_PHONE }}</a></p>
+      <p><strong>Phone</strong><br>
+        {% for phone in COMPANY_PHONES %}
+        <a href="tel:{{ phone|cut:' '|cut:'-' }}">{{ phone }}</a>{% if not forloop.last %}<br>{% endif %}
+        {% endfor %}
+      </p>
       <p><strong>Location</strong><br>{{ COMPANY_LOCATION }}</p>
       <p class="muted">Prefer to see the partnership model first? Read about our <a href="{% url 'thales_partnership' %}">Thales Accelerate partnership</a>.</p>
     </aside>
