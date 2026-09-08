@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}About Us — {{ COMPANY_NAME }}{% endblock %}
+
+{% block content %}
+<section class="section page-header">
+  <div class="container">
+    <span class="eyebrow">About Us</span>
+    <h1>Built in Nairobi, for businesses scaling across clouds.</h1>
+    <p class="lead">
+      {{ COMPANY_NAME }} is a Nairobi-based technology consulting firm. We help small and
+      medium enterprises, and the vendors who serve them, adopt cloud and multi-cloud
+      infrastructure with the same security discipline as much larger organizations —
+      without the capital outlay that used to make that impossible.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container grid grid-2">
+    <div>
+      <h2>Our mission</h2>
+      <p>
+        Cloud adoption in East Africa is accelerating faster than most SMEs' ability to secure
+        it. We close that gap: designing multi-cloud architectures that are cost-efficient,
+        resilient, and protected by enterprise-grade encryption and key management from day one.
+      </p>
+    </div>
+    <div>
+      <h2>How we work</h2>
+      <p>
+        We combine hands-on cloud engineering with a formal partnership in the
+        <a href="{% url 'thales_partnership' %}">Thales Accelerate Partner Network</a>,
+        giving clients access to Data Protection on Demand (DPoD) and CipherTrust without
+        needing an in-house security team or on-premises hardware security modules.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="section-title">What sets us apart</h2>
+    <div class="grid grid-3">
+      <div class="feature">
+        <h3>Vendor-neutral cloud advice</h3>
+        <p>We design for AWS, Azure and GCP based on your workloads and budget — not a single vendor's incentives.</p>
+      </div>
+      <div class="feature">
+        <h3>Certified Thales practice</h3>
+        <p>Our team is trained on CipherTrust Manager and DPoD sales and technical tracks through Thales Partner University.</p>
+      </div>
+      <div class="feature">
+        <h3>Pay-as-you-grow pricing</h3>
+        <p>From project-based advisory to fully managed subscriptions, our engagement models scale with your business.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section text-center">
+  <div class="container">
+    <h2>Let's talk about your cloud and data protection roadmap.</h2>
+    <a class="btn btn-primary btn-lg" href="{% url 'contact' %}">Contact {{ COMPANY_NAME }}</a>
+  </div>
+</section>
+{% endblock %}

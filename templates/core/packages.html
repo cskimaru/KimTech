@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Packages &amp; Pricing — {{ COMPANY_NAME }}{% endblock %}
+
+{% block content %}
+<section class="section page-header">
+  <div class="container">
+    <span class="eyebrow">Packages &amp; Pricing</span>
+    <h1>Clear scopes. Predictable pricing.</h1>
+    <p class="lead">Every engagement starts with a fixed-scope package. If your needs grow, we scale the retainer with you.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="grid grid-3">
+      {% for package in packages %}
+      <div class="card card-lg {% if package.is_featured %}card-featured{% endif %}">
+        {% if package.is_featured %}<span class="badge">Most popular</span>{% endif %}
+        <h2>{{ package.name }}</h2>
+        {% if package.tagline %}<p class="muted">{{ package.tagline }}</p>{% endif %}
+        <p class="price">{{ package.price_description }}</p>
+        <ul class="feature-list">
+          {% for feature in package.feature_list %}
+          <li>{{ feature }}</li>
+          {% endfor %}
+        </ul>
+        <a class="btn btn-outline" href="{% url 'contact' %}">Enquire</a>
+      </div>
+      {% empty %}
+      <div class="card card-lg">
+        <h2>Cloud Key Audit</h2>
+        <p class="muted">A fixed-scope starting point</p>
+        <p class="price">From KES 80,000 (one-time)</p>
+        <ul class="feature-list">
+          <li>Inventory of encryption keys across your cloud accounts</li>
+          <li>Gap analysis against BYOK / HSM best practice</li>
+          <li>Written recommendation report</li>
+        </ul>
+        <a class="btn btn-outline" href="{% url 'contact' %}">Enquire</a>
+      </div>
+      <div class="card card-lg card-featured">
+        <span class="badge">Most popular</span>
+        <h2>Multi-Cloud Key Protection</h2>
+        <p class="muted">DPoD deployment + BYOK + oversight</p>
+        <p class="price">From KES 180,000/month</p>
+        <ul class="feature-list">
+          <li>Thales DPoD (cloud HSM / CipherTrust Manager) provisioning</li>
+          <li>BYOK configuration for AWS, Azure and/or GCP</li>
+          <li>CipherTrust Cloud Key Manager (CCKM) setup</li>
+          <li>Monthly key rotation and policy review</li>
+        </ul>
+        <a class="btn btn-primary" href="{% url 'contact' %}">Enquire</a>
+      </div>
+      <div class="card card-lg">
+        <h2>Managed Oversight Retainer</h2>
+        <p class="muted">For clients who contract Thales directly</p>
+        <p class="price">Custom quote</p>
+        <ul class="feature-list">
+          <li>Independent advisory on architecture and integration</li>
+          <li>REST / KMIP integration support</li>
+          <li>Compliance audit preparation</li>
+          <li>Staff training on key management operations</li>
+        </ul>
+        <a class="btn btn-outline" href="{% url 'contact' %}">Enquire</a>
+      </div>
+      {% endfor %}
+    </div>
+    <p class="muted text-center">Pricing is indicative and confirmed after a short scoping call — final cost depends on cloud footprint, number of accounts and compliance requirements.</p>
+  </div>
+</section>
+{% endblock %}

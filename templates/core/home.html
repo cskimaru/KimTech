@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+  <div class="container hero-inner">
+    <span class="eyebrow">Nairobi &middot; Cloud &amp; Data Protection Consulting</span>
+    <h1>Multi-cloud engineering and enterprise-grade data protection, sized for growing businesses.</h1>
+    <p class="lead">
+      {{ COMPANY_NAME }} helps SMEs and enterprises across East Africa design, secure and
+      run workloads across AWS, Azure and GCP — and, as a Thales Accelerate Partner, brings
+      enterprise-grade key management and encryption (Thales DPoD &amp; CipherTrust) within
+      reach of businesses that could never justify a $30,000 on-prem HSM.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary btn-lg" href="{% url 'contact' %}">Book a free consultation</a>
+      <a class="btn btn-outline btn-lg" href="{% url 'thales_partnership' %}">Explore the Thales partnership</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">What we do</h2>
+    <div class="grid grid-4">
+      {% for service in services %}
+      <div class="card">
+        <div class="card-icon">{{ service.icon|default:"☁" }}</div>
+        <h3>{{ service.title }}</h3>
+        <p>{{ service.summary }}</p>
+      </div>
+      {% empty %}
+      <div class="card">
+        <div class="card-icon">☁</div>
+        <h3>Cloud &amp; Multi-Cloud Consulting</h3>
+        <p>Architecture, migration and cost optimization across AWS, Azure and GCP.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔐</div>
+        <h3>Thales Data Protection</h3>
+        <p>DPoD, CipherTrust Manager and CCKM &mdash; deployed as a managed service.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🛡</div>
+        <h3>Managed Security Services</h3>
+        <p>Ongoing key orchestration, monitoring and compliance oversight.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📋</div>
+        <h3>Security &amp; Compliance Advisory</h3>
+        <p>Independent guidance on data protection strategy and audit readiness.</p>
+      </div>
+      {% endfor %}
+    </div>
+    <p class="text-center"><a class="btn btn-outline" href="{% url 'services' %}">See all services</a></p>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="section-title">Why Thales DPoD fits SMEs</h2>
+    <div class="grid grid-3">
+      <div class="feature">
+        <h3>No capital expenditure</h3>
+        <p>Provision cloud HSM partitions or CipherTrust key-management instances in minutes &mdash; no hardware to buy or host.</p>
+      </div>
+      <div class="feature">
+        <h3>Easy multi-cloud add-on</h3>
+        <p>CipherTrust Cloud Key Manager (CCKM) centralizes encryption keys across AWS, Azure and GCP from a single console.</p>
+      </div>
+      <div class="feature">
+        <h3>High-value advisory work</h3>
+        <p>For every $1,000 of Thales subscription, clients typically spend $2,000&ndash;$4,000 on implementation &mdash; where our team adds the most value.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Three ways we engage</h2>
+    <div class="grid grid-3">
+      {% for model in engagement_models %}
+      <div class="card">
+        <h3>{{ model.name }}</h3>
+        <p>{{ model.how_it_works }}</p>
+      </div>
+      {% empty %}
+      <div class="card"><h3>Reseller (VAR)</h3><p>We scope, procure and deploy Thales licenses at partner rates, adding a margin and consulting fees.</p></div>
+      <div class="card"><h3>Managed Service (MSP)</h3><p>DPoD and CipherTrust wrapped into a monthly managed subscription for SMEs.</p></div>
+      <div class="card"><h3>Advisory</h3><p>Independent architecture, integration and compliance guidance while you contract Thales directly.</p></div>
+      {% endfor %}
+    </div>
+    <p class="text-center"><a class="btn btn-outline" href="{% url 'thales_partnership' %}">See the full partnership model</a></p>
+  </div>
+</section>
+
+<section class="section cta-band">
+  <div class="container text-center">
+    <h2>Ready to protect your cloud keys?</h2>
+    <p class="lead">Tell us about your environment and we'll recommend the right engagement model.</p>
+    <a class="btn btn-primary btn-lg" href="{% url 'contact' %}">Talk to {{ COMPANY_NAME }}</a>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Contact — {{ COMPANY_NAME }}{% endblock %}
+
+{% block content %}
+<section class="section page-header">
+  <div class="container">
+    <span class="eyebrow">Contact</span>
+    <h1>Tell us about your cloud &amp; data protection needs.</h1>
+    <p class="lead">We typically reply within one business day with a recommended engagement model.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container grid grid-2">
+    <div>
+      <form method="post" class="form" novalidate>
+        {% csrf_token %}
+        <div class="form-honeypot">{{ form.website }}</div>
+
+        {% for field in form.visible_fields %}
+        <div class="form-group">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% if field.help_text %}<p class="field-help">{{ field.help_text }}</p>{% endif %}
+          {% for error in field.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+        {% endfor %}
+
+        {% if form.non_field_errors %}
+          <p class="field-error">{{ form.non_field_errors }}</p>
+        {% endif %}
+
+        <button type="submit" class="btn btn-primary btn-lg">Send message</button>
+      </form>
+    </div>
+
+    <aside class="contact-info">
+      <h2>Other ways to reach us</h2>
+      <p><strong>Email</strong><br><a href="mailto:{{ COMPANY_EMAIL }}">{{ COMPANY_EMAIL }}</a></p>
+      <p><strong>Phone</strong><br><a href="tel:{{ COMPANY_PHONE }}">{{ COMPANY_PHONE }}</a></p>
+      <p><strong>Location</strong><br>{{ COMPANY_LOCATION }}</p>
+      <p class="muted">Prefer to see the partnership model first? Read about our <a href="{% url 'thales_partnership' %}">Thales Accelerate partnership</a>.</p>
+    </aside>
+  </div>
+</section>
+{% endblock %}

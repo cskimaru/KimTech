@@ -1,0 +1,146 @@
+[
+  {
+    "model": "core.service",
+    "pk": 1,
+    "fields": {
+      "title": "Cloud & Multi-Cloud Consulting",
+      "slug": "cloud-multi-cloud-consulting",
+      "icon": "\u2601",
+      "summary": "Architecture, migration and cost optimization across AWS, Azure and GCP.",
+      "description": "We design and migrate workloads across one or more cloud providers, balancing cost, resilience and vendor lock-in for growing businesses.",
+      "order": 1,
+      "is_published": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 2,
+    "fields": {
+      "title": "Thales Data Protection & Key Management",
+      "slug": "thales-data-protection-key-management",
+      "icon": "\ud83d\udd10",
+      "summary": "DPoD, CipherTrust Manager and CCKM \u2014 deployed as a managed service.",
+      "description": "Deployment and configuration of Data Protection on Demand (DPoD), CipherTrust Manager and CipherTrust Cloud Key Manager (CCKM), including BYOK for AWS, Azure and GCP.",
+      "order": 2,
+      "is_published": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 3,
+    "fields": {
+      "title": "Managed Security Services",
+      "slug": "managed-security-services",
+      "icon": "\ud83d\udee1",
+      "summary": "Ongoing key orchestration, monitoring and compliance oversight.",
+      "description": "A monthly retainer covering key rotation, policy management, monitoring and vendor liaison, so clients avoid hiring a full in-house security team.",
+      "order": 3,
+      "is_published": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 4,
+    "fields": {
+      "title": "Security & Compliance Advisory",
+      "slug": "security-compliance-advisory",
+      "icon": "\ud83d\udccb",
+      "summary": "Independent guidance on data protection strategy and audit readiness.",
+      "description": "Solution design, REST/KMIP integration support, and compliance audit preparation for clients who contract directly with their chosen vendors.",
+      "order": 4,
+      "is_published": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.engagementmodel",
+    "pk": 1,
+    "fields": {
+      "name": "Value-Added Reseller (VAR) / Referral",
+      "how_it_works": "We act as reseller or trusted advisor: scoping the solution, purchasing licenses from a Thales distributor (e.g. Ingram Micro or Tech Data) at partner discount rates, and selling them to the customer.",
+      "how_beka_monetizes": "Margin markup on license sales (typically 15%\u201335%) plus consulting fees for initial architecture, deployment and policy configuration.",
+      "order": 1,
+      "is_published": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.engagementmodel",
+    "pk": 2,
+    "fields": {
+      "name": "Managed Service Provider (MSP) for DPoD",
+      "how_it_works": "We wrap Thales DPoD (Data Protection on Demand) \u2014 cloud HSMs and CipherTrust-as-a-Service \u2014 into a managed subscription bundle for SMEs.",
+      "how_beka_monetizes": "Monthly recurring revenue: we charge the customer a monthly fee for managed key orchestration and data protection, paying Thales the base usage fee and retaining the margin.",
+      "order": 2,
+      "is_published": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.engagementmodel",
+    "pk": 3,
+    "fields": {
+      "name": "Pure Security & Key Management Advisory",
+      "how_it_works": "We act as an independent cybersecurity consultant. The client pays Thales directly for the DPoD/CipherTrust tenant, while we handle integration.",
+      "how_beka_monetizes": "High-margin professional services fees for solution design, REST/KMIP integration, compliance auditing and staff training.",
+      "order": 3,
+      "is_published": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.package",
+    "pk": 1,
+    "fields": {
+      "name": "Cloud Key Audit",
+      "tagline": "A fixed-scope starting point",
+      "price_description": "From KES 80,000 (one-time)",
+      "features": "Inventory of encryption keys across your cloud accounts\nGap analysis against BYOK / HSM best practice\nWritten recommendation report",
+      "is_featured": false,
+      "order": 1,
+      "is_published": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.package",
+    "pk": 2,
+    "fields": {
+      "name": "Multi-Cloud Key Protection",
+      "tagline": "DPoD deployment + BYOK + oversight",
+      "price_description": "From KES 180,000/month",
+      "features": "Thales DPoD (cloud HSM / CipherTrust Manager) provisioning\nBYOK configuration for AWS, Azure and/or GCP\nCipherTrust Cloud Key Manager (CCKM) setup\nMonthly key rotation and policy review",
+      "is_featured": true,
+      "order": 2,
+      "is_published": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.package",
+    "pk": 3,
+    "fields": {
+      "name": "Managed Oversight Retainer",
+      "tagline": "For clients who contract Thales directly",
+      "price_description": "Custom quote",
+      "features": "Independent advisory on architecture and integration\nREST / KMIP integration support\nCompliance audit preparation\nStaff training on key management operations",
+      "is_featured": false,
+      "order": 3,
+      "is_published": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  }
+]

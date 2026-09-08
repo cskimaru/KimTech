@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Services — {{ COMPANY_NAME }}{% endblock %}
+
+{% block content %}
+<section class="section page-header">
+  <div class="container">
+    <span class="eyebrow">Services</span>
+    <h1>Cloud engineering and data protection, end to end.</h1>
+    <p class="lead">From architecture and migration to ongoing managed key protection, we cover the full lifecycle of secure multi-cloud adoption.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container grid grid-2">
+    {% for service in services %}
+    <div class="card card-lg">
+      <div class="card-icon">{{ service.icon|default:"☁" }}</div>
+      <h2>{{ service.title }}</h2>
+      <p>{{ service.summary }}</p>
+      {% if service.description %}<p class="muted">{{ service.description }}</p>{% endif %}
+    </div>
+    {% empty %}
+    <div class="card card-lg">
+      <div class="card-icon">☁</div>
+      <h2>Cloud &amp; Multi-Cloud Consulting</h2>
+      <p>Architecture design, migration planning, and cost optimization across AWS, Azure and GCP, tailored to SME budgets and growth plans.</p>
+    </div>
+    <div class="card card-lg">
+      <div class="card-icon">🔐</div>
+      <h2>Thales Data Protection &amp; Key Management</h2>
+      <p>Deployment and configuration of Data Protection on Demand (DPoD), CipherTrust Manager and CipherTrust Cloud Key Manager (CCKM), including BYOK for AWS, Azure and GCP.</p>
+    </div>
+    <div class="card card-lg">
+      <div class="card-icon">🛡</div>
+      <h2>Managed Security Services</h2>
+      <p>Ongoing key orchestration, monitoring, patching and vendor liaison delivered as a monthly retainer — so you never have to hire a full in-house security team.</p>
+    </div>
+    <div class="card card-lg">
+      <div class="card-icon">📋</div>
+      <h2>Security &amp; Compliance Advisory</h2>
+      <p>Independent guidance on data protection strategy, REST/KMIP integration, and audit readiness — while you contract directly with your chosen vendors.</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section section-alt text-center">
+  <div class="container">
+    <h2>Not sure which service fits your business?</h2>
+    <p class="lead">Tell us where you are today and we'll recommend an engagement model.</p>
+    <a class="btn btn-primary btn-lg" href="{% url 'contact' %}">Get a recommendation</a>
+  </div>
+</section>
+{% endblock %}

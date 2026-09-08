@@ -1,0 +1,80 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ COMPANY_NAME }} — Cloud, Multi-Cloud & Data Protection Consulting{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{{ COMPANY_NAME }} is a Nairobi-based consulting firm delivering multi-cloud engineering and Thales data-protection solutions (DPoD, CipherTrust) to SMEs and enterprises.{% endblock %}">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="{% url 'home' %}" class="brand">
+        <span class="brand-mark">B</span>
+        <span class="brand-name">{{ COMPANY_NAME }}</span>
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Menu</span>
+      </button>
+      <nav class="primary-nav" id="primary-nav">
+        <a href="{% url 'services' %}">Services</a>
+        <a href="{% url 'thales_partnership' %}">Thales Partnership</a>
+        <a href="{% url 'packages' %}">Packages</a>
+        <a href="{% url 'about' %}">About</a>
+        <a href="{% url 'contact' %}" class="btn btn-primary btn-sm">Get in touch</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    {% if messages %}
+      <div class="container">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags|default:'info' }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="brand">
+          <span class="brand-mark">B</span>
+          <span class="brand-name">{{ COMPANY_NAME }}</span>
+        </div>
+        <p class="muted">{{ COMPANY_TAGLINE }}</p>
+        <p class="muted">{{ COMPANY_LOCATION }}</p>
+      </div>
+      <div>
+        <h3>Company</h3>
+        <a href="{% url 'about' %}">About Us</a>
+        <a href="{% url 'services' %}">Services</a>
+        <a href="{% url 'thales_partnership' %}">Thales Partnership</a>
+        <a href="{% url 'packages' %}">Packages &amp; Pricing</a>
+      </div>
+      <div>
+        <h3>Get in touch</h3>
+        <a href="mailto:{{ COMPANY_EMAIL }}">{{ COMPANY_EMAIL }}</a>
+        <a href="tel:{{ COMPANY_PHONE }}">{{ COMPANY_PHONE }}</a>
+        <a href="{% url 'contact' %}">Contact form</a>
+      </div>
+      <div>
+        <h3>Legal</h3>
+        <a href="{% url 'privacy_policy' %}">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p class="muted">&copy; {% now "Y" %} {{ COMPANY_NAME }}. All rights reserved. Thales, DPoD and CipherTrust are trademarks of Thales Group.</p>
+    </div>
+  </footer>
+
+  <script src="{% static 'js/main.js' %}" defer></script>
+</body>
+</html>
