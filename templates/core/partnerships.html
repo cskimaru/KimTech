@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Partnerships — {{ COMPANY_NAME }}{% endblock %}
+
+{% block content %}
+<section class="section page-header">
+  <div class="container">
+    <span class="eyebrow">Partnerships</span>
+    <h1>The vendors behind our data protection &amp; digital trust practice.</h1>
+    <p class="lead">
+      {{ COMPANY_NAME }} pairs cloud and security consulting with formal channel
+      relationships, so clients get enterprise-grade platforms without dealing
+      with a vendor directly or hiring specialist staff.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container grid grid-2">
+    {% for partner in partners %}
+    <a class="card card-lg partner-card" href="{{ partner.get_absolute_url }}">
+      <div class="card-icon">{{ partner.icon|default:"🤝" }}</div>
+      {% if partner.status == "in_discussion" %}
+        <span class="badge badge-muted">Partnership in discussion</span>
+      {% endif %}
+      <h2>{{ partner.name }}</h2>
+      <p>{{ partner.one_liner }}</p>
+      <span class="link-arrow">See the partnership details &rarr;</span>
+    </a>
+    {% empty %}
+    <p class="muted">Partnership details are being updated — check back shortly.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section section-alt text-center">
+  <div class="container">
+    <h2>Exploring a vendor partnership with us?</h2>
+    <p class="lead">If you represent a security, identity or cloud platform vendor looking for Kenyan/East African channel coverage, we'd like to talk.</p>
+    <a class="btn btn-primary btn-lg" href="{% url 'contact' %}">Get in touch</a>
+  </div>
+</section>
+{% endblock %}

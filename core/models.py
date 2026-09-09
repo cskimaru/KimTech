@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 
 
@@ -37,9 +38,59 @@ class Service(TimestampedModel):
         super().save(*args, **kwargs)
 
 
-class EngagementModel(TimestampedModel):
-    """One row of the Thales partnership engagement-model table."""
+class Partner(TimestampedModel):
+    """A vendor BEKA Ltd resells or partners with (e.g. Thales, eMudhra)."""
 
+    STATUS_CHOICES = [
+        ("active", "Active partner"),
+        ("in_discussion", "Partnership in discussion"),
+    ]
+
+    name = models.CharField(max_length=120)
+    slug = models.SlugField(max_length=140, unique=True, blank=True)
+    icon = models.CharField(max_length=40, blank=True, help_text="Emoji or short label.")
+    one_liner = models.CharField(max_length=200)
+    about = models.TextField(help_text="A few sentences about the vendor.")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="in_discussion")
+    order = models.PositiveIntegerField(default=0)
+    is_published = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["order", "name"]
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("partner_detail", kwargs={"slug": self.slug})
+
+
+class PartnerBenefit(TimestampedModel):
+    """A 'why this fits SMEs'-style bullet point for a partner's detail page."""
+
+    partner = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name="benefits")
+    title = models.CharField(max_length=120)
+    description = models.TextField()
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order", "id"]
+
+    def __str__(self):
+        return f"{self.partner.name}: {self.title}"
+
+
+class EngagementModel(TimestampedModel):
+    """One row of a partner's engagement-model table (VAR / MSP / Advisory, etc.)."""
+
+    partner = models.ForeignKey(
+        Partner, on_delete=models.CASCADE, related_name="engagement_models"
+    )
     name = models.CharField(max_length=120)
     how_it_works = models.TextField()
     how_beka_monetizes = models.TextField()
@@ -50,12 +101,15 @@ class EngagementModel(TimestampedModel):
         ordering = ["order", "name"]
 
     def __str__(self):
-        return self.name
+        return f"{self.partner.name}: {self.name}"
 
 
 class Package(TimestampedModel):
     """A packaged SME offering, e.g. tiers of the Multi-Cloud Key Protection Package."""
 
+    partner = models.ForeignKey(
+        Partner, on_delete=models.SET_NULL, related_name="packages", null=True, blank=True
+    )
     name = models.CharField(max_length=120)
     tagline = models.CharField(max_length=200, blank=True)
     price_description = models.CharField(
@@ -82,6 +136,7 @@ class ContactMessage(TimestampedModel):
     SERVICE_CHOICES = [
         ("cloud", "Cloud & Multi-Cloud Consulting"),
         ("thales", "Thales Data Protection (DPoD / CipherTrust)"),
+        ("emudhra", "eMudhra Digital Signatures & PKI"),
         ("managed", "Managed Security Services"),
         ("advisory", "Security & Compliance Advisory"),
         ("other", "Other / Not sure yet"),

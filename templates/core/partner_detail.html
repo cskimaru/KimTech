@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block title %}{{ partner.name }} Partnership — {{ COMPANY_NAME }}{% endblock %}
+{% block meta_description %}How {{ COMPANY_NAME }} works with {{ partner.name }}: {{ partner.one_liner }}{% endblock %}
+
+{% block content %}
+<section class="section page-header">
+  <div class="container">
+    <span class="eyebrow">Partnership</span>
+    {% if partner.status == "in_discussion" %}
+      <span class="badge badge-muted badge-inline">Partnership in discussion — terms being finalized</span>
+    {% endif %}
+    <h1>{{ partner.name }}</h1>
+    <p class="lead">{{ partner.one_liner }}</p>
+    <p>{{ partner.about }}</p>
+  </div>
+</section>
+
+{% if engagement_models %}
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">How {{ COMPANY_NAME }} would engage &amp; monetize</h2>
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Engagement model</th>
+            <th>How {{ COMPANY_NAME }} operates</th>
+            <th>How we monetize</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for model in engagement_models %}
+          <tr>
+            <td><strong>{{ model.name }}</strong></td>
+            <td>{{ model.how_it_works }}</td>
+            <td>{{ model.how_beka_monetizes }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if partner.status == "in_discussion" %}
+    <p class="muted">Exact commercial terms are still being finalized directly with {{ partner.name }} — the models above describe how {{ COMPANY_NAME }} typically structures a channel relationship of this kind.</p>
+    {% endif %}
+  </div>
+</section>
+{% endif %}
+
+{% if benefits %}
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="section-title">Why this fits our clients</h2>
+    <div class="grid grid-3">
+      {% for benefit in benefits %}
+      <div class="feature">
+        <h3>{{ benefit.title }}</h3>
+        <p>{{ benefit.description }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">How we bring {{ partner.name }} to market</h2>
+    <div class="grid grid-3">
+      <div class="feature">
+        <h3>1. Partner registration</h3>
+        <p>{{ COMPANY_NAME }} registers with {{ partner.name }}'s partner/channel program under the relevant reseller, MSP or advisory track.</p>
+      </div>
+      <div class="feature">
+        <h3>2. Certification</h3>
+        <p>Our team completes the vendor's sales and technical enablement so we can scope, deploy and support the platform ourselves.</p>
+      </div>
+      <div class="feature">
+        <h3>3. Packaged SME offering</h3>
+        <p>We turn the partnership into a fixed-scope package (see below), so clients get a clear price and deliverable rather than an open-ended engagement.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if packages %}
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="section-title">{{ partner.name }} packages</h2>
+    <div class="grid grid-3">
+      {% for package in packages %}
+      <div class="card card-lg {% if package.is_featured %}card-featured{% endif %}">
+        {% if package.is_featured %}<span class="badge">Most popular</span>{% endif %}
+        <h3>{{ package.name }}</h3>
+        {% if package.tagline %}<p class="muted">{{ package.tagline }}</p>{% endif %}
+        <p class="price">{{ package.price_description }}</p>
+        <ul class="feature-list">
+          {% for feature in package.feature_list %}
+          <li>{{ feature }}</li>
+          {% endfor %}
+        </ul>
+        <a class="btn btn-outline" href="{% url 'contact' %}">Enquire</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="section text-center">
+  <div class="container">
+    <h2>Interested in {{ partner.name }} through {{ COMPANY_NAME }}?</h2>
+    <a class="btn btn-primary btn-lg" href="{% url 'contact' %}">Talk to us</a>
+    <p class="muted"><a href="{% url 'partnerships' %}">&larr; See all partnerships</a></p>
+  </div>
+</section>
+{% endblock %}

@@ -5,7 +5,7 @@
     "fields": {
       "title": "Cloud & Multi-Cloud Consulting",
       "slug": "cloud-multi-cloud-consulting",
-      "icon": "\u2601",
+      "icon": "☁",
       "summary": "Architecture, migration and cost optimization across AWS, Azure and GCP.",
       "description": "We design and migrate workloads across one or more cloud providers, balancing cost, resilience and vendor lock-in for growing businesses.",
       "order": 1,
@@ -20,8 +20,8 @@
     "fields": {
       "title": "Thales Data Protection & Key Management",
       "slug": "thales-data-protection-key-management",
-      "icon": "\ud83d\udd10",
-      "summary": "DPoD, CipherTrust Manager and CCKM \u2014 deployed as a managed service.",
+      "icon": "🔐",
+      "summary": "DPoD, CipherTrust Manager and CCKM — deployed as a managed service.",
       "description": "Deployment and configuration of Data Protection on Demand (DPoD), CipherTrust Manager and CipherTrust Cloud Key Manager (CCKM), including BYOK for AWS, Azure and GCP.",
       "order": 2,
       "is_published": true,
@@ -35,7 +35,7 @@
     "fields": {
       "title": "Managed Security Services",
       "slug": "managed-security-services",
-      "icon": "\ud83d\udee1",
+      "icon": "🛡",
       "summary": "Ongoing key orchestration, monitoring and compliance oversight.",
       "description": "A monthly retainer covering key rotation, policy management, monitoring and vendor liaison, so clients avoid hiring a full in-house security team.",
       "order": 3,
@@ -50,7 +50,7 @@
     "fields": {
       "title": "Security & Compliance Advisory",
       "slug": "security-compliance-advisory",
-      "icon": "\ud83d\udccb",
+      "icon": "📋",
       "summary": "Independent guidance on data protection strategy and audit readiness.",
       "description": "Solution design, REST/KMIP integration support, and compliance audit preparation for clients who contract directly with their chosen vendors.",
       "order": 4,
@@ -59,13 +59,121 @@
       "updated_at": "2026-01-01T00:00:00Z"
     }
   },
+
+  {
+    "model": "core.partner",
+    "pk": 1,
+    "fields": {
+      "name": "Thales",
+      "slug": "thales",
+      "icon": "🔐",
+      "one_liner": "Global data protection vendor — Data Protection on Demand (DPoD) and CipherTrust key management.",
+      "about": "Thales Cloud Protection & Licensing (CPL) is a global leader in data security, offering cloud HSMs, encryption and key management through Data Protection on Demand (DPoD) and the CipherTrust Data Security Platform. BEKA Ltd participates in the Thales Accelerate Partner Network to bring these platforms to SMEs and enterprises in Kenya.",
+      "status": "active",
+      "order": 1,
+      "is_published": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.partner",
+    "pk": 2,
+    "fields": {
+      "name": "eMudhra",
+      "slug": "emudhra",
+      "icon": "🖋",
+      "one_liner": "Global Certifying Authority for digital signatures, PKI and paperless workflow, with a Nairobi-based subsidiary.",
+      "about": "eMudhra Limited, headquartered in Bengaluru and listed on the NSE and BSE, is a global Certifying Authority (CA) and cybersecurity company specializing in digital identity, Public Key Infrastructure (PKI), digital signatures and paperless workflow software. Its subsidiaries span India, the USA, Singapore, the UAE and Kenya (eMudhra Kenya Limited, Nairobi). BEKA Ltd is in discussion with eMudhra Kenya Limited to bring digital certificate issuance and digital-signature workflow tools to Kenyan businesses.",
+      "status": "in_discussion",
+      "order": 2,
+      "is_published": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+
+  {
+    "model": "core.partnerbenefit",
+    "pk": 1,
+    "fields": {
+      "partner": 1,
+      "title": "No capital expenditure",
+      "description": "Provision cloud HSM partitions or CipherTrust key-management instances in minutes — no hardware to buy or host.",
+      "order": 1,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.partnerbenefit",
+    "pk": 2,
+    "fields": {
+      "partner": 1,
+      "title": "Easy multi-cloud add-on",
+      "description": "CipherTrust Cloud Key Manager (CCKM) centralizes encryption keys across AWS, Azure and GCP from a single console.",
+      "order": 2,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.partnerbenefit",
+    "pk": 3,
+    "fields": {
+      "partner": 1,
+      "title": "High-value advisory work",
+      "description": "For every $1,000 of Thales subscription, clients typically spend $2,000–$4,000 on implementation — where our team adds the most value.",
+      "order": 3,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.partnerbenefit",
+    "pk": 4,
+    "fields": {
+      "partner": 2,
+      "title": "Legally recognized e-signatures",
+      "description": "Certificates issued by an accredited Certification Service Provider are recognized under Kenya's electronic transactions laws, giving signed documents the same legal standing as a wet-ink signature.",
+      "order": 1,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.partnerbenefit",
+    "pk": 5,
+    "fields": {
+      "partner": 2,
+      "title": "No paper, no courier",
+      "description": "Digital signature workflow software lets SMEs route contracts, HR documents and approvals for signature entirely online, cutting turnaround from days to minutes.",
+      "order": 2,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.partnerbenefit",
+    "pk": 6,
+    "fields": {
+      "partner": 2,
+      "title": "Local presence in Nairobi",
+      "description": "eMudhra Kenya Limited's local registration means certificate issuance and support are available in-market, not only from India.",
+      "order": 3,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+
   {
     "model": "core.engagementmodel",
     "pk": 1,
     "fields": {
+      "partner": 1,
       "name": "Value-Added Reseller (VAR) / Referral",
       "how_it_works": "We act as reseller or trusted advisor: scoping the solution, purchasing licenses from a Thales distributor (e.g. Ingram Micro or Tech Data) at partner discount rates, and selling them to the customer.",
-      "how_beka_monetizes": "Margin markup on license sales (typically 15%\u201335%) plus consulting fees for initial architecture, deployment and policy configuration.",
+      "how_beka_monetizes": "Margin markup on license sales (typically 15%–35%) plus consulting fees for initial architecture, deployment and policy configuration.",
       "order": 1,
       "is_published": true,
       "created_at": "2026-01-01T00:00:00Z",
@@ -76,8 +184,9 @@
     "model": "core.engagementmodel",
     "pk": 2,
     "fields": {
+      "partner": 1,
       "name": "Managed Service Provider (MSP) for DPoD",
-      "how_it_works": "We wrap Thales DPoD (Data Protection on Demand) \u2014 cloud HSMs and CipherTrust-as-a-Service \u2014 into a managed subscription bundle for SMEs.",
+      "how_it_works": "We wrap Thales DPoD (Data Protection on Demand) — cloud HSMs and CipherTrust-as-a-Service — into a managed subscription bundle for SMEs.",
       "how_beka_monetizes": "Monthly recurring revenue: we charge the customer a monthly fee for managed key orchestration and data protection, paying Thales the base usage fee and retaining the margin.",
       "order": 2,
       "is_published": true,
@@ -89,6 +198,7 @@
     "model": "core.engagementmodel",
     "pk": 3,
     "fields": {
+      "partner": 1,
       "name": "Pure Security & Key Management Advisory",
       "how_it_works": "We act as an independent cybersecurity consultant. The client pays Thales directly for the DPoD/CipherTrust tenant, while we handle integration.",
       "how_beka_monetizes": "High-margin professional services fees for solution design, REST/KMIP integration, compliance auditing and staff training.",
@@ -99,9 +209,53 @@
     }
   },
   {
+    "model": "core.engagementmodel",
+    "pk": 4,
+    "fields": {
+      "partner": 2,
+      "name": "Reseller / Channel Partner",
+      "how_it_works": "We resell digital certificates (organizational, signing and encryption certificates) and digital-signature workflow software licenses sourced through eMudhra Kenya Limited at channel rates.",
+      "how_beka_monetizes": "Margin on certificate and license sales, plus fees for deployment, system integration and end-user rollout.",
+      "order": 1,
+      "is_published": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.engagementmodel",
+    "pk": 5,
+    "fields": {
+      "partner": 2,
+      "name": "Managed Digital Signature Rollout",
+      "how_it_works": "We manage the end-to-end rollout of a digital-signature workflow for a client: certificate issuance for signatories, integration with existing document and approval systems, and staff onboarding.",
+      "how_beka_monetizes": "A fixed-fee rollout project plus an ongoing support retainer for renewals, new users and workflow changes.",
+      "order": 2,
+      "is_published": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.engagementmodel",
+    "pk": 6,
+    "fields": {
+      "partner": 2,
+      "name": "PKI & Compliance Advisory",
+      "how_it_works": "We advise independently on which certificate class and signing process fits a client's legal and operational needs, while the client contracts eMudhra directly for certificates.",
+      "how_beka_monetizes": "Professional services fees for scoping, integration support, and staff training on digital signature processes.",
+      "order": 3,
+      "is_published": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+
+  {
     "model": "core.package",
     "pk": 1,
     "fields": {
+      "partner": 1,
       "name": "Cloud Key Audit",
       "tagline": "A fixed-scope starting point",
       "price_description": "From KES 80,000 (one-time)",
@@ -117,6 +271,7 @@
     "model": "core.package",
     "pk": 2,
     "fields": {
+      "partner": 1,
       "name": "Multi-Cloud Key Protection",
       "tagline": "DPoD deployment + BYOK + oversight",
       "price_description": "From KES 180,000/month",
@@ -132,12 +287,29 @@
     "model": "core.package",
     "pk": 3,
     "fields": {
+      "partner": 1,
       "name": "Managed Oversight Retainer",
       "tagline": "For clients who contract Thales directly",
       "price_description": "Custom quote",
       "features": "Independent advisory on architecture and integration\nREST / KMIP integration support\nCompliance audit preparation\nStaff training on key management operations",
       "is_featured": false,
       "order": 3,
+      "is_published": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.package",
+    "pk": 4,
+    "fields": {
+      "partner": 2,
+      "name": "Digital Signature Enablement",
+      "tagline": "Paper workflow audit + certificates + rollout",
+      "price_description": "From KES 60,000 (one-time) + per-seat licensing",
+      "features": "Paper workflow audit and signature-readiness assessment\nDigital certificate issuance for authorized signatories\nDigital-signature workflow configuration and integration\nStaff training and rollout support",
+      "is_featured": false,
+      "order": 4,
       "is_published": true,
       "created_at": "2026-01-01T00:00:00Z",
       "updated_at": "2026-01-01T00:00:00Z"

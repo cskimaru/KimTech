@@ -1,6 +1,8 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
+from .models import Partner
+
 
 class StaticViewSitemap(Sitemap):
     changefreq = "weekly"
@@ -11,7 +13,7 @@ class StaticViewSitemap(Sitemap):
             "home",
             "about",
             "services",
-            "thales_partnership",
+            "partnerships",
             "packages",
             "contact",
             "privacy_policy",
@@ -19,3 +21,17 @@ class StaticViewSitemap(Sitemap):
 
     def location(self, item):
         return reverse(item)
+
+
+class PartnerSitemap(Sitemap):
+    changefreq = "weekly"
+    priority = 0.6
+
+    def items(self):
+        return Partner.objects.filter(is_published=True)
+
+    def location(self, partner):
+        return partner.get_absolute_url()
+
+    def lastmod(self, partner):
+        return partner.updated_at

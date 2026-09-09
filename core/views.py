@@ -3,10 +3,10 @@ import logging
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import ContactForm
-from .models import EngagementModel, Package, Service
+from .models import Package, Partner, Service
 
 logger = logging.getLogger(__name__)
 
@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 def home(request):
     context = {
         "services": Service.objects.filter(is_published=True)[:4],
-        "engagement_models": EngagementModel.objects.filter(is_published=True)[:3],
+        "partners": Partner.objects.filter(is_published=True),
     }
     return render(request, "core/home.html", context)
 
@@ -28,11 +28,20 @@ def services(request):
     return render(request, "core/services.html", context)
 
 
-def thales_partnership(request):
+def partnerships(request):
+    context = {"partners": Partner.objects.filter(is_published=True)}
+    return render(request, "core/partnerships.html", context)
+
+
+def partner_detail(request, slug):
+    partner = get_object_or_404(Partner, slug=slug, is_published=True)
     context = {
-        "engagement_models": EngagementModel.objects.filter(is_published=True),
+        "partner": partner,
+        "benefits": partner.benefits.all(),
+        "engagement_models": partner.engagement_models.filter(is_published=True),
+        "packages": partner.packages.filter(is_published=True),
     }
-    return render(request, "core/thales_partnership.html", context)
+    return render(request, "core/partner_detail.html", context)
 
 
 def packages(request):

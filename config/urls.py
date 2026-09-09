@@ -3,19 +3,25 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.urls import path
-from django.views.generic import TemplateView
+from django.views.generic import RedirectView, TemplateView
 
-from core.sitemaps import StaticViewSitemap
+from core.sitemaps import PartnerSitemap, StaticViewSitemap
 from core import views
 
-sitemaps = {"static": StaticViewSitemap}
+sitemaps = {"static": StaticViewSitemap, "partners": PartnerSitemap}
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.home, name="home"),
     path("about/", views.about, name="about"),
     path("services/", views.services, name="services"),
-    path("thales-partnership/", views.thales_partnership, name="thales_partnership"),
+    path("partnerships/", views.partnerships, name="partnerships"),
+    path("partnerships/<slug:slug>/", views.partner_detail, name="partner_detail"),
+    path(
+        "thales-partnership/",
+        RedirectView.as_view(pattern_name="partner_detail", permanent=True, query_string=True),
+        {"slug": "thales"},
+    ),
     path("packages/", views.packages, name="packages"),
     path("contact/", views.contact, name="contact"),
     path("privacy-policy/", views.privacy_policy, name="privacy_policy"),

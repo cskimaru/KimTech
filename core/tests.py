@@ -2,7 +2,7 @@ from django.core import mail
 from django.test import TestCase
 from django.urls import reverse
 
-from .models import ContactMessage, EngagementModel, Package, Service
+from .models import ContactMessage, EngagementModel, Package, Partner, Service
 
 
 class PublicPagesTests(TestCase):
@@ -22,13 +22,33 @@ class PublicPagesTests(TestCase):
         self.assertContains(response, "Visible Service")
         self.assertNotContains(response, "Hidden Service")
 
-    def test_thales_partnership_page_loads(self):
+    def test_partnerships_hub_lists_published_partners_only(self):
+        Partner.objects.create(name="Visible Partner", one_liner="x", about="x", is_published=True)
+        Partner.objects.create(name="Hidden Partner", one_liner="x", about="x", is_published=False)
+        response = self.client.get(reverse("partnerships"))
+        self.assertContains(response, "Visible Partner")
+        self.assertNotContains(response, "Hidden Partner")
+
+    def test_partner_detail_page_loads(self):
+        partner = Partner.objects.create(name="Test Partner", slug="test-partner", one_liner="x", about="x")
         EngagementModel.objects.create(
-            name="Test Model", how_it_works="works", how_beka_monetizes="pays"
+            partner=partner, name="Test Model", how_it_works="works", how_beka_monetizes="pays"
         )
-        response = self.client.get(reverse("thales_partnership"))
+        response = self.client.get(reverse("partner_detail", args=["test-partner"]))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Test Model")
+
+    def test_unpublished_partner_detail_returns_404(self):
+        Partner.objects.create(
+            name="Hidden Partner", slug="hidden-partner", one_liner="x", about="x", is_published=False
+        )
+        response = self.client.get(reverse("partner_detail", args=["hidden-partner"]))
+        self.assertEqual(response.status_code, 404)
+
+    def test_old_thales_partnership_url_redirects(self):
+        Partner.objects.create(name="Thales", slug="thales", one_liner="x", about="x")
+        response = self.client.get("/thales-partnership/")
+        self.assertRedirects(response, reverse("partner_detail", args=["thales"]), status_code=301)
 
     def test_packages_page_loads(self):
         Package.objects.create(
