@@ -5,11 +5,12 @@
 <section class="section page-header">
   <div class="container">
     <span class="eyebrow">Partnerships</span>
-    <h1>The vendors behind our data protection &amp; digital trust practice.</h1>
+    <h1>The vendors we're building our data protection &amp; digital trust practice around.</h1>
     <p class="lead">
-      {{ COMPANY_NAME }} pairs cloud and security consulting with formal channel
-      relationships, so clients get enterprise-grade platforms without dealing
-      with a vendor directly or hiring specialist staff.
+      {{ COMPANY_NAME }} is pursuing formal channel relationships with the vendors below,
+      so clients will eventually get enterprise-grade platforms without dealing with a
+      vendor directly or hiring specialist staff. None of these partnerships are
+      formalized yet — see each vendor's page for its current status.
     </p>
   </div>
 </section>
@@ -19,12 +20,12 @@
     {% for partner in partners %}
     <a class="card card-lg partner-card" href="{{ partner.get_absolute_url }}">
       <div class="card-icon">{{ partner.icon|default:"🤝" }}</div>
-      {% if partner.status == "in_discussion" %}
-        <span class="badge badge-muted">Partnership in discussion</span>
+      {% if partner.status == "planned" %}
+        <span class="badge badge-muted">Not yet formalized</span>
       {% endif %}
       <h2>{{ partner.name }}</h2>
       <p>{{ partner.one_liner }}</p>
-      <span class="link-arrow">See the partnership details &rarr;</span>
+      <span class="link-arrow">See details &rarr;</span>
     </a>
     {% empty %}
     <p class="muted">Partnership details are being updated — check back shortly.</p>

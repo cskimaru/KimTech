@@ -7,10 +7,10 @@
     <h1>Multi-cloud engineering and enterprise-grade digital trust, sized for growing businesses.</h1>
     <p class="lead">
       {{ COMPANY_NAME }} helps SMEs and enterprises across East Africa design, secure and
-      run workloads across AWS, Azure and GCP — and, through formal partnerships with
-      global security and digital-identity vendors, brings enterprise-grade key management,
-      encryption and digital signature platforms within reach of businesses that could
-      never justify the cost of building it in-house.
+      run workloads across AWS, Azure and GCP — and is building toward partnerships with
+      global security and digital-identity vendors, aiming to bring enterprise-grade key
+      management, encryption and digital signature platforms within reach of businesses
+      that could never justify the cost of building it in-house.
     </p>
     <div class="cta-row">
       <a class="btn btn-primary btn-lg" href="{% url 'contact' %}">Book a free consultation</a>
@@ -58,26 +58,26 @@
 
 <section class="section section-alt">
   <div class="container">
-    <h2 class="section-title">Our partnerships</h2>
+    <h2 class="section-title">Partnerships we're building</h2>
     <p class="lead text-center" style="margin-left:auto;margin-right:auto;">
-      We pair our own engineering with formal vendor relationships, so clients get
-      enterprise-grade platforms without dealing with the vendor directly.
+      We're pursuing vendor relationships so clients can eventually get enterprise-grade
+      platforms without dealing with the vendor directly. None of these are formalized yet.
     </p>
     <div class="grid grid-2">
       {% for partner in partners %}
       <a class="card card-lg partner-card" href="{{ partner.get_absolute_url }}">
         <div class="card-icon">{{ partner.icon|default:"🤝" }}</div>
-        {% if partner.status == "in_discussion" %}
-          <span class="badge badge-muted">Partnership in discussion</span>
+        {% if partner.status == "planned" %}
+          <span class="badge badge-muted">Not yet formalized</span>
         {% endif %}
         <h3>{{ partner.name }}</h3>
         <p>{{ partner.one_liner }}</p>
-        <span class="link-arrow">See the partnership details &rarr;</span>
+        <span class="link-arrow">See details &rarr;</span>
       </a>
       {% empty %}
       <div class="card card-lg">
         <h3>Thales</h3>
-        <p>Data Protection on Demand (DPoD) and CipherTrust, resold and managed for SMEs.</p>
+        <p>Data Protection on Demand (DPoD) and CipherTrust — a partnership we're working to establish.</p>
       </div>
       {% endfor %}
     </div>

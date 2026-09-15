@@ -287,6 +287,20 @@ a:hover { text-decoration: underline; }
 .alert-error, .alert-danger { background: #fdecea; color: #8e2f22; border: 1px solid #f3c1ba; }
 .alert-info { background: #eaf3fb; color: #0f4c81; border: 1px solid #bfdcf3; }
 
+.callout {
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  max-width: 70ch;
+}
+.callout-warning {
+  background: #fff8e6;
+  border: 1px solid #f0d999;
+  color: #6b5000;
+}
+.callout-warning strong { color: #4d3900; }
+
 /* Footer */
 .site-footer { background: var(--color-ink); color: #cbd5e1; padding: 3.5rem 0 1.5rem; margin-top: 3rem; }
 .site-footer .brand { color: #fff; margin-bottom: 0.5rem; }

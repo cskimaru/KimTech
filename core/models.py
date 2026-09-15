@@ -42,8 +42,8 @@ class Partner(TimestampedModel):
     """A vendor BEKA Ltd resells or partners with (e.g. Thales, eMudhra)."""
 
     STATUS_CHOICES = [
-        ("active", "Active partner"),
-        ("in_discussion", "Partnership in discussion"),
+        ("planned", "Planned partnership — not yet formalized"),
+        ("active", "Active, certified/contracted partner"),
     ]
 
     name = models.CharField(max_length=120)
@@ -51,7 +51,17 @@ class Partner(TimestampedModel):
     icon = models.CharField(max_length=40, blank=True, help_text="Emoji or short label.")
     one_liner = models.CharField(max_length=200)
     about = models.TextField(help_text="A few sentences about the vendor.")
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="in_discussion")
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="planned",
+        help_text=(
+            "Only set 'active' once BEKA Ltd has an actual signed/certified relationship "
+            "with this vendor. Until then this MUST stay 'planned' — the site explicitly "
+            "labels planned partners as not yet formalized to avoid misrepresenting the "
+            "relationship to visitors or to the vendor itself."
+        ),
+    )
     order = models.PositiveIntegerField(default=0)
     is_published = models.BooleanField(default=True)
 

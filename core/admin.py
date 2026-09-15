@@ -32,6 +32,7 @@ class EngagementModelInline(admin.TabularInline):
 class PartnerAdmin(admin.ModelAdmin):
     list_display = ("name", "status", "order", "is_published", "updated_at")
     list_editable = ("order", "is_published")
+    list_filter = ("status",)
     prepopulated_fields = {"slug": ("name",)}
     search_fields = ("name", "one_liner")
     inlines = [PartnerBenefitInline, EngagementModelInline]

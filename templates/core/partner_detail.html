@@ -1,17 +1,26 @@
 {% extends "base.html" %}
-{% block title %}{{ partner.name }} Partnership — {{ COMPANY_NAME }}{% endblock %}
-{% block meta_description %}How {{ COMPANY_NAME }} works with {{ partner.name }}: {{ partner.one_liner }}{% endblock %}
+{% block title %}{{ partner.name }} — {{ COMPANY_NAME }}{% endblock %}
+{% block meta_description %}{{ partner.name }} at {{ COMPANY_NAME }}: {{ partner.one_liner }}{% endblock %}
 
 {% block content %}
 <section class="section page-header">
   <div class="container">
-    <span class="eyebrow">Partnership</span>
-    {% if partner.status == "in_discussion" %}
-      <span class="badge badge-muted badge-inline">Partnership in discussion — terms being finalized</span>
+    <span class="eyebrow">{% if partner.status == "planned" %}Planned Partnership{% else %}Partnership{% endif %}</span>
+    {% if partner.status == "planned" %}
+      <span class="badge badge-muted badge-inline">Not yet formalized</span>
     {% endif %}
     <h1>{{ partner.name }}</h1>
     <p class="lead">{{ partner.one_liner }}</p>
     <p>{{ partner.about }}</p>
+
+    {% if partner.status == "planned" %}
+    <div class="callout callout-warning">
+      <strong>Status:</strong> BEKA Ltd does not currently have a formal partnership,
+      contract, certification or reseller agreement with {{ partner.name }}. Everything
+      below describes a business model we are working to establish, not an existing
+      relationship or an endorsement by {{ partner.name }}.
+    </div>
+    {% endif %}
   </div>
 </section>
 
@@ -24,8 +33,8 @@
         <thead>
           <tr>
             <th>Engagement model</th>
-            <th>How {{ COMPANY_NAME }} operates</th>
-            <th>How we monetize</th>
+            <th>How {{ COMPANY_NAME }} would operate</th>
+            <th>How we would monetize</th>
           </tr>
         </thead>
         <tbody>
@@ -39,8 +48,8 @@
         </tbody>
       </table>
     </div>
-    {% if partner.status == "in_discussion" %}
-    <p class="muted">Exact commercial terms are still being finalized directly with {{ partner.name }} — the models above describe how {{ COMPANY_NAME }} typically structures a channel relationship of this kind.</p>
+    {% if partner.status == "planned" %}
+    <p class="muted">These are illustrative engagement models based on {{ partner.name }}'s publicly known channel programs, not confirmed terms — actual terms would only exist once BEKA Ltd completes formal partner accreditation with {{ partner.name }}.</p>
     {% endif %}
   </div>
 </section>
@@ -49,7 +58,7 @@
 {% if benefits %}
 <section class="section section-alt">
   <div class="container">
-    <h2 class="section-title">Why this fits our clients</h2>
+    <h2 class="section-title">Why this would fit our clients</h2>
     <div class="grid grid-3">
       {% for benefit in benefits %}
       <div class="feature">
@@ -64,19 +73,19 @@
 
 <section class="section">
   <div class="container">
-    <h2 class="section-title">How we bring {{ partner.name }} to market</h2>
+    <h2 class="section-title">How we would bring {{ partner.name }} to market</h2>
     <div class="grid grid-3">
       <div class="feature">
         <h3>1. Partner registration</h3>
-        <p>{{ COMPANY_NAME }} registers with {{ partner.name }}'s partner/channel program under the relevant reseller, MSP or advisory track.</p>
+        <p>{{ COMPANY_NAME }} would register with {{ partner.name }}'s partner/channel program under the relevant reseller, MSP or advisory track.</p>
       </div>
       <div class="feature">
         <h3>2. Certification</h3>
-        <p>Our team completes the vendor's sales and technical enablement so we can scope, deploy and support the platform ourselves.</p>
+        <p>Our team would complete the vendor's sales and technical enablement so we can scope, deploy and support the platform ourselves.</p>
       </div>
       <div class="feature">
         <h3>3. Packaged SME offering</h3>
-        <p>We turn the partnership into a fixed-scope package (see below), so clients get a clear price and deliverable rather than an open-ended engagement.</p>
+        <p>We would turn the partnership into a fixed-scope package (see below), so clients get a clear price and deliverable rather than an open-ended engagement.</p>
       </div>
     </div>
   </div>
@@ -85,7 +94,10 @@
 {% if packages %}
 <section class="section section-alt">
   <div class="container">
-    <h2 class="section-title">{{ partner.name }} packages</h2>
+    <h2 class="section-title">Proposed {{ partner.name }} packages</h2>
+    {% if partner.status == "planned" %}
+    <p class="muted text-center">Indicative pricing for planning purposes only — subject to change once a formal partnership and pricing are in place.</p>
+    {% endif %}
     <div class="grid grid-3">
       {% for package in packages %}
       <div class="card card-lg {% if package.is_featured %}card-featured{% endif %}">
@@ -98,7 +110,7 @@
           <li>{{ feature }}</li>
           {% endfor %}
         </ul>
-        <a class="btn btn-outline" href="{% url 'contact' %}">Enquire</a>
+        <a class="btn btn-outline" href="{% url 'contact' %}">Register interest</a>
       </div>
       {% endfor %}
     </div>
@@ -108,8 +120,9 @@
 
 <section class="section text-center">
   <div class="container">
-    <h2>Interested in {{ partner.name }} through {{ COMPANY_NAME }}?</h2>
-    <a class="btn btn-primary btn-lg" href="{% url 'contact' %}">Talk to us</a>
+    <h2>Interested in {{ partner.name }} solutions from {{ COMPANY_NAME }}?</h2>
+    <p class="muted">Let us know — client interest helps us decide which partnerships to formalize first.</p>
+    <a class="btn btn-primary btn-lg" href="{% url 'contact' %}">Register your interest</a>
     <p class="muted"><a href="{% url 'partnerships' %}">&larr; See all partnerships</a></p>
   </div>
 </section>
