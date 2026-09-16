@@ -60,11 +60,48 @@ contact-form email notifications (see `.env.example`).
 
 ## Deployment
 
-- **Docker**: `docker build -t beka-website . && docker run -p 8000:8000 --env-file .env beka-website`
-- **Procfile-based platforms** (Render, Railway, Heroku-style): the included
-  `Procfile` runs migrations, collects static files, and starts Gunicorn.
-- Static files are served via [WhiteNoise](https://whitenoise.readthedocs.io/),
-  so no separate static file host is required.
+Static files are served via [WhiteNoise](https://whitenoise.readthedocs.io/),
+so no separate static file host is required in any of the options below.
+
+### Free hosting: Render (web app) + Neon (database)
+
+This is the recommended free path — no credit card, and the database doesn't
+expire like Render's own free Postgres does (30 days). You do need to create
+both accounts yourself; nobody else can do that step for you.
+
+1. **Create a free Postgres database on [Neon](https://neon.tech)** (sign up
+   with GitHub/Google, no card needed). Create a project, then copy its
+   connection string (starts with `postgres://...`) — you'll need it in step 3.
+2. **Create a free account on [Render](https://render.com)** and connect your
+   GitHub account so it can see the `cskimaru/KimTech` repo.
+3. In Render, choose **New → Blueprint**, point it at this repo — it will read
+   `render.yaml` and set up the web service automatically. When prompted for
+   the env vars marked "set during deploy", fill in:
+   - `ALLOWED_HOSTS` — your Render URL once assigned, e.g. `beka-ltd-website.onrender.com` (comma-separate if you add a custom domain later)
+   - `CSRF_TRUSTED_ORIGINS` — `https://beka-ltd-website.onrender.com` (same, with `https://`)
+   - `DATABASE_URL` — the Neon connection string from step 1
+   - `CONTACT_NOTIFY_EMAIL`, and the `EMAIL_*` vars if you want contact-form
+     email notifications (leave blank to skip email; submissions are always
+     saved to the database and visible in `/admin/` either way)
+   `SECRET_KEY` is generated for you automatically.
+4. Render builds and deploys automatically on every push to `main`. Create an
+   admin user for `/admin/` once, from Render's dashboard **Shell** tab:
+   `python manage.py createsuperuser`
+5. **Known limitation of the free tier**: the site "sleeps" after 15 minutes
+   with no traffic, so the first visitor after a quiet spell waits ~30–60
+   seconds for it to wake up. That's a Render free-tier trade-off, not a bug.
+
+### Docker (any host that runs containers)
+
+```bash
+docker build -t beka-website .
+docker run -p 8000:8000 --env-file .env beka-website
+```
+
+### Any other Procfile-based platform
+
+The included `Procfile` runs migrations, collects static files, and starts
+Gunicorn — works on Railway, Heroku-style platforms, etc.
 
 ## Content model
 
