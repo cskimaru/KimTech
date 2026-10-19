@@ -76,8 +76,8 @@ def contact(request):
 
             messages.success(
                 request,
-                "Thanks for reaching out — a member of the BEKA Ltd team will "
-                "get back to you within one business day.",
+                f"Thanks for reaching out — a member of the {settings.COMPANY_NAME} team "
+                "will get back to you within one business day.",
             )
             return redirect("contact")
     else:

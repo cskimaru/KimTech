@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: beka-ltd-website
+    name: nabec-networks-connection
     runtime: python
     plan: free
     buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput"

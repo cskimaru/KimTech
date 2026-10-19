@@ -39,7 +39,7 @@ class Service(TimestampedModel):
 
 
 class Partner(TimestampedModel):
-    """A vendor BEKA Ltd resells or partners with (e.g. Thales, eMudhra)."""
+    """A vendor Nabec Networks Connection resells or partners with (e.g. Thales, eMudhra)."""
 
     STATUS_CHOICES = [
         ("planned", "Planned partnership — not yet formalized"),
@@ -56,10 +56,10 @@ class Partner(TimestampedModel):
         choices=STATUS_CHOICES,
         default="planned",
         help_text=(
-            "Only set 'active' once BEKA Ltd has an actual signed/certified relationship "
-            "with this vendor. Until then this MUST stay 'planned' — the site explicitly "
-            "labels planned partners as not yet formalized to avoid misrepresenting the "
-            "relationship to visitors or to the vendor itself."
+            "Only set 'active' once Nabec Networks Connection has an actual signed/certified "
+            "relationship with this vendor. Until then this MUST stay 'planned' — the site "
+            "explicitly labels planned partners as not yet formalized to avoid "
+            "misrepresenting the relationship to visitors or to the vendor itself."
         ),
     )
     order = models.PositiveIntegerField(default=0)

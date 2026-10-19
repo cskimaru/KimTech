@@ -9,7 +9,7 @@ class PublicPagesTests(TestCase):
     def test_home_page_loads(self):
         response = self.client.get(reverse("home"))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "BEKA Ltd")
+        self.assertContains(response, "Nabec Networks Connection")
 
     def test_about_page_loads(self):
         response = self.client.get(reverse("about"))

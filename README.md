@@ -1,19 +1,21 @@
-# BEKA Ltd — Website
+# Nabec Networks Connection — Website
 
-Django site for **BEKA Ltd**, a Nairobi-based cloud and multi-cloud consulting
-firm. The site also documents vendor partnerships BEKA Ltd is working to
-establish (currently Thales and eMudhra) — **none of these partnerships are
-formalized yet**; the site labels them explicitly as planned/not-yet-formalized
-and this must stay accurate as the business develops. Only flip a `Partner`'s
-`status` to `active` in the admin once there is an actual signed, certified or
-contracted relationship with that vendor.
+Django site for **Nabec Networks Connection**, a Nairobi-based cloud and
+multi-cloud consulting business (registered business name, owner Catherine
+Chemtai Naibei; Business No. BN-79S6KEBZ). The site also documents vendor
+partnerships Nabec Networks Connection is working to establish (currently
+Thales and eMudhra) — **none of these partnerships are formalized yet**; the
+site labels them explicitly as planned/not-yet-formalized and this must stay
+accurate as the business develops. Only flip a `Partner`'s `status` to
+`active` in the admin once there is an actual signed, certified or contracted
+relationship with that vendor.
 
 ## Pages
 
 - **Home** — overview of services and planned partnerships
 - **About** — company background and mission
 - **Services** — cloud/multi-cloud consulting, data protection, managed security, advisory
-- **Partnerships** — a hub listing each vendor BEKA Ltd is pursuing a partnership with, plus a detail page per vendor (engagement models, benefits, packages) that clearly flags "not yet formalized" status until it's real
+- **Partnerships** — a hub listing each vendor Nabec Networks Connection is pursuing a partnership with, plus a detail page per vendor (engagement models, benefits, packages) that clearly flags "not yet formalized" status until it's real
 - **Packages & Pricing** — packaged SME offerings across all vendors
 - **Contact** — a working contact form (saved to the database + optional email notification, with spam honeypot protection)
 - **Privacy Policy**
@@ -77,8 +79,8 @@ both accounts yourself; nobody else can do that step for you.
 3. In Render, choose **New → Blueprint**, point it at this repo — it will read
    `render.yaml` and set up the web service automatically. When prompted for
    the env vars marked "set during deploy", fill in:
-   - `ALLOWED_HOSTS` — your Render URL once assigned, e.g. `beka-ltd-website.onrender.com` (comma-separate if you add a custom domain later)
-   - `CSRF_TRUSTED_ORIGINS` — `https://beka-ltd-website.onrender.com` (same, with `https://`)
+   - `ALLOWED_HOSTS` — your Render URL once assigned, e.g. `nabec-networks-connection.onrender.com` (comma-separate if you add a custom domain later)
+   - `CSRF_TRUSTED_ORIGINS` — `https://nabec-networks-connection.onrender.com` (same, with `https://`)
    - `DATABASE_URL` — the Neon connection string from step 1
    - `CONTACT_NOTIFY_EMAIL`, and the `EMAIL_*` vars if you want contact-form
      email notifications (leave blank to skip email; submissions are always
@@ -94,8 +96,8 @@ both accounts yourself; nobody else can do that step for you.
 ### Docker (any host that runs containers)
 
 ```bash
-docker build -t beka-website .
-docker run -p 8000:8000 --env-file .env beka-website
+docker build -t nabec-networks-website .
+docker run -p 8000:8000 --env-file .env nabec-networks-website
 ```
 
 ### Any other Procfile-based platform
