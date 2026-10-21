@@ -13,7 +13,7 @@ jobs:
       DJANGO_SETTINGS_MODULE: config.settings.dev
       SECRET_KEY: ci-test-secret-key
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-python@v5
         with:
@@ -38,7 +38,7 @@ jobs:
       SECRET_KEY: ci-deploy-check-dummy-secret-key-with-enough-length-and-entropy-0123456789
       ALLOWED_HOSTS: example.com
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-python@v5
         with:
