@@ -11,7 +11,7 @@ from core import views
 sitemaps = {"static": StaticViewSitemap, "partners": PartnerSitemap}
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path(f"{settings.ADMIN_URL}/", admin.site.urls),
     path("", views.home, name="home"),
     path("about/", views.about, name="about"),
     path("services/", views.services, name="services"),

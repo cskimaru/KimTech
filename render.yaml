@@ -10,6 +10,8 @@ services:
         value: 3.12.7
       - key: DJANGO_SETTINGS_MODULE
         value: config.settings.prod
+      - key: ADMIN_URL
+        value: admin
       - key: SECRET_KEY
         generateValue: true
       - key: ALLOWED_HOSTS

@@ -5,3 +5,6 @@ class CoreConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "core"
     verbose_name = "Nabec Networks Connection Website"
+
+    def ready(self):
+        from . import signals  # noqa: F401

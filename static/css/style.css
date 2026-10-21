@@ -66,6 +66,7 @@ a:hover { text-decoration: underline; }
 .lead { font-size: 1.15rem; color: var(--color-ink-soft); max-width: 65ch; }
 .text-center { text-align: center; }
 .text-center .lead { margin-left: auto; margin-right: auto; }
+.lead-centered { margin-left: auto; margin-right: auto; text-align: center; }
 
 .eyebrow {
   display: inline-block;

@@ -1,7 +1,12 @@
 from django.core import mail
-from django.test import TestCase
+from django.core.cache import cache
+from django.test import TestCase, override_settings
 from django.urls import reverse
 
+from .middleware import (
+    ADMIN_LOGIN_MAX_ATTEMPTS,
+    admin_login_throttle_key,
+)
 from .models import ContactMessage, EngagementModel, Package, Partner, Service
 
 
@@ -74,6 +79,9 @@ class PublicPagesTests(TestCase):
 
 
 class ContactFormTests(TestCase):
+    def setUp(self):
+        cache.clear()
+
     def test_valid_submission_saves_and_redirects(self):
         response = self.client.post(
             reverse("contact"),
@@ -128,3 +136,67 @@ class ContactFormTests(TestCase):
             )
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn("ops@beka.co.ke", mail.outbox[0].to)
+
+
+class ContactFormRateLimitTests(TestCase):
+    def setUp(self):
+        cache.clear()
+
+    def tearDown(self):
+        cache.clear()
+
+    def _post(self):
+        return self.client.post(
+            reverse("contact"),
+            {
+                "name": "Jane Doe",
+                "email": "jane@example.com",
+                "message": "Hello there, this is a test message.",
+                "service_interest": "other",
+                "website": "",
+            },
+        )
+
+    def test_excess_submissions_from_same_ip_are_blocked(self):
+        from .views import CONTACT_RATE_LIMIT_MAX_ATTEMPTS
+
+        for _ in range(CONTACT_RATE_LIMIT_MAX_ATTEMPTS):
+            response = self._post()
+            self.assertRedirects(response, reverse("contact"))
+
+        blocked_count_before = ContactMessage.objects.count()
+        response = self._post()
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "too many times")
+        self.assertEqual(ContactMessage.objects.count(), blocked_count_before)
+
+
+class AdminLoginThrottleTests(TestCase):
+    def setUp(self):
+        cache.clear()
+
+    def tearDown(self):
+        cache.clear()
+
+    def test_admin_login_blocked_after_too_many_failures(self):
+        login_url = reverse("admin:login")
+        for _ in range(ADMIN_LOGIN_MAX_ATTEMPTS):
+            self.client.post(login_url, {"username": "nope", "password": "wrong"})
+
+        key = admin_login_throttle_key("127.0.0.1")
+        self.assertGreaterEqual(cache.get(key, 0), ADMIN_LOGIN_MAX_ATTEMPTS)
+
+        response = self.client.post(login_url, {"username": "nope", "password": "wrong"})
+        self.assertEqual(response.status_code, 429)
+
+
+class SecurityHeadersTests(TestCase):
+    def test_public_page_has_strict_csp(self):
+        response = self.client.get(reverse("home"))
+        self.assertIn("Content-Security-Policy", response.headers)
+        self.assertIn("default-src 'self'", response.headers["Content-Security-Policy"])
+        self.assertIn("Permissions-Policy", response.headers)
+
+    def test_admin_page_is_not_forced_into_site_csp(self):
+        response = self.client.get(reverse("admin:login"))
+        self.assertNotIn("Content-Security-Policy", response.headers)

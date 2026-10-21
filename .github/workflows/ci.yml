@@ -31,3 +31,32 @@ jobs:
 
       - name: Run tests
         run: python manage.py test
+
+  security:
+    runs-on: ubuntu-latest
+    env:
+      SECRET_KEY: ci-deploy-check-dummy-secret-key-with-enough-length-and-entropy-0123456789
+      ALLOWED_HOSTS: example.com
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install bandit pip-audit
+
+      - name: Bandit static security analysis
+        run: bandit -r core config -ll
+
+      - name: pip-audit dependency vulnerability scan
+        run: pip-audit -r requirements.txt
+
+      - name: Django production deployment checklist
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings.prod
+        run: python manage.py check --deploy --fail-level WARNING

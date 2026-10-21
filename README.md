@@ -58,7 +58,23 @@ Settings are split under `config/settings/`:
 
 Set `DJANGO_SETTINGS_MODULE=config.settings.prod` in production, along with
 `SECRET_KEY`, `ALLOWED_HOSTS`, `DATABASE_URL`, and SMTP credentials for
-contact-form email notifications (see `.env.example`).
+contact-form email notifications (see `.env.example`). Optionally set
+`ADMIN_URL` to something other than `admin` to cut down on automated bot
+traffic against the login page.
+
+## Security
+
+See [SECURITY.md](./SECURITY.md) for the full picture, including what this
+setup explicitly does **not** cover. Short version: this is a single
+Django application (not microservices — a well-secured monolith is the
+right call at this scale), currently scoped to a public marketing site and
+a contact form, with no payment processing. It follows standard Django/OWASP
+hardening (CSRF, HSTS, secure/HttpOnly/SameSite cookies, a strict
+Content-Security-Policy, admin login throttling, contact-form rate
+limiting) and is scanned on every push with `bandit` (static analysis),
+`pip-audit` (dependency CVEs) and Django's own `manage.py check --deploy`.
+None of that adds up to "unhackable" — if this site ever takes on payments
+or other sensitive functionality, get a real security review first.
 
 ## Deployment
 

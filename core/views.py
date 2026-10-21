@@ -1,14 +1,19 @@
 import logging
 
 from django.contrib import messages
+from django.core.cache import cache
 from django.core.mail import send_mail
 from django.conf import settings
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import ContactForm
+from .middleware import get_client_ip
 from .models import Package, Partner, Service
 
 logger = logging.getLogger(__name__)
+
+CONTACT_RATE_LIMIT_MAX_ATTEMPTS = 10
+CONTACT_RATE_LIMIT_WINDOW_SECONDS = 10 * 60
 
 
 def home(request):
@@ -51,6 +56,17 @@ def packages(request):
 
 def contact(request):
     if request.method == "POST":
+        rate_limit_key = f"contact-submissions:{get_client_ip(request)}"
+        attempts = cache.get(rate_limit_key, 0)
+        if attempts >= CONTACT_RATE_LIMIT_MAX_ATTEMPTS:
+            messages.error(
+                request,
+                "You've submitted this form too many times recently. "
+                "Please wait a few minutes and try again.",
+            )
+            return render(request, "core/contact.html", {"form": ContactForm()})
+        cache.set(rate_limit_key, attempts + 1, timeout=CONTACT_RATE_LIMIT_WINDOW_SECONDS)
+
         form = ContactForm(request.POST)
         if form.is_valid():
             contact_message = form.save()

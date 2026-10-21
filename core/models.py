@@ -159,7 +159,7 @@ class ContactMessage(TimestampedModel):
     service_interest = models.CharField(
         max_length=20, choices=SERVICE_CHOICES, default="other"
     )
-    message = models.TextField()
+    message = models.TextField(max_length=5000)
     is_read = models.BooleanField(default=False)
 
     class Meta:
