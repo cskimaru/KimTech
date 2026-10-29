@@ -27,10 +27,13 @@
         <span class="sr-only">Menu</span>
       </button>
       <nav class="primary-nav" id="primary-nav">
-        <a href="{% url 'services' %}">Services</a>
-        <a href="{% url 'partnerships' %}">Partnerships</a>
-        <a href="{% url 'packages' %}">Packages</a>
-        <a href="{% url 'about' %}">About</a>
+        {% with page=request.resolver_match.url_name %}
+        <a href="{% url 'home' %}"{% if page == 'home' %} class="is-current" aria-current="page"{% endif %}>Home</a>
+        <a href="{% url 'services' %}"{% if page == 'services' %} class="is-current" aria-current="page"{% endif %}>Services</a>
+        <a href="{% url 'partnerships' %}"{% if page == 'partnerships' or page == 'partner_detail' %} class="is-current" aria-current="page"{% endif %}>Partnerships</a>
+        <a href="{% url 'packages' %}"{% if page == 'packages' %} class="is-current" aria-current="page"{% endif %}>Packages</a>
+        <a href="{% url 'about' %}"{% if page == 'about' %} class="is-current" aria-current="page"{% endif %}>About</a>
+        {% endwith %}
         <a href="{% url 'contact' %}" class="btn btn-primary btn-sm">Get in touch</a>
       </nav>
     </div>
@@ -59,6 +62,7 @@
       </div>
       <div>
         <h3>Company</h3>
+        <a href="{% url 'home' %}">Home</a>
         <a href="{% url 'about' %}">About Us</a>
         <a href="{% url 'services' %}">Services</a>
         <a href="{% url 'partnerships' %}">Partnerships</a>

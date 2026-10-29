@@ -12,6 +12,8 @@ services:
         value: config.settings.prod
       - key: ADMIN_URL
         value: admin
+      - key: CANONICAL_HOST
+        value: nabec.co.ke
       - key: SECRET_KEY
         generateValue: true
       - key: ALLOWED_HOSTS

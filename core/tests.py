@@ -238,3 +238,24 @@ class GetOnlineContentTests(TestCase):
         response = self.client.get(reverse("contact") + "?service=nonsense")
         self.assertContains(response, '<option value="other" selected>')
 
+
+@override_settings(ALLOWED_HOSTS=["nabec.co.ke", "nabec-networks-connection.onrender.com"])
+class CanonicalHostTests(TestCase):
+    def test_other_host_redirects_to_the_real_domain(self):
+        with self.settings(CANONICAL_HOST="nabec.co.ke"):
+            response = self.client.get("/packages/?x=1", HTTP_HOST="nabec-networks-connection.onrender.com")
+        self.assertEqual(response.status_code, 301)
+        self.assertEqual(response["Location"], "https://nabec.co.ke/packages/?x=1")
+
+    def test_real_domain_is_served(self):
+        with self.settings(CANONICAL_HOST="nabec.co.ke"):
+            response = self.client.get("/", HTTP_HOST="nabec.co.ke")
+        self.assertEqual(response.status_code, 200)
+
+
+class NavigationTests(TestCase):
+    def test_menu_has_home_and_marks_the_current_page(self):
+        response = self.client.get(reverse("packages"))
+        self.assertContains(response, '>Home</a>')
+        self.assertContains(response, 'class="is-current" aria-current="page">Packages</a>')
+

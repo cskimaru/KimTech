@@ -520,3 +520,8 @@ body::before {
 .card::before { content: ""; position: absolute; left: 14px; right: 14px; top: 0; height: 3px; border-radius: 0 0 3px 3px; background: var(--gradient-brand); opacity: 0; transition: opacity 0.2s ease; }
 .card:hover::before { opacity: 1; }
 .badge { z-index: 1; }
+
+/* Current page in the menu */
+.primary-nav a.is-current { color: var(--color-primary); position: relative; }
+.primary-nav a.is-current::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; border-radius: 2px; background: var(--gradient-brand); }
+@media (max-width: 720px) { .primary-nav a.is-current::after { right: auto; width: 2rem; } }

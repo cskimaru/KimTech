@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.core.cache import cache
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponsePermanentRedirect
 from django.urls import NoReverseMatch, reverse
 
 ADMIN_LOGIN_MAX_ATTEMPTS = 10
@@ -83,4 +83,20 @@ class AdminLoginThrottleMiddleware:
                     content_type="text/plain",
                 )
 
+        return self.get_response(request)
+
+
+class CanonicalHostMiddleware:
+    """Sends visitors who arrive on another host name (e.g. the Render onrender.com
+    address, or www) to CANONICAL_HOST, keeping the path, so search engines and
+    shared links only ever use the real domain. Does nothing when CANONICAL_HOST
+    is unset (development and tests)."""
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        canonical = getattr(settings, "CANONICAL_HOST", "")
+        if canonical and request.get_host().split(":")[0].lower() != canonical:
+            return HttpResponsePermanentRedirect(f"https://{canonical}{request.get_full_path()}")
         return self.get_response(request)

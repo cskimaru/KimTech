@@ -17,6 +17,10 @@ CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
 # depth, not a substitute for a strong password and the login throttle below.
 ADMIN_URL = env("ADMIN_URL", default="admin")
 
+# The one public host name; requests for any other allowed host (the onrender.com address,
+# www) are permanently redirected there. Leave empty to serve every allowed host as is.
+CANONICAL_HOST = env("CANONICAL_HOST", default="")
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -31,6 +35,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "core.middleware.CanonicalHostMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "core.middleware.AdminLoginThrottleMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
