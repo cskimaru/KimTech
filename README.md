@@ -101,9 +101,12 @@ both accounts yourself; nobody else can do that step for you.
      email notifications (leave blank to skip email; submissions are always
      saved to the database and visible in `/admin/` either way)
    `SECRET_KEY` is generated for you automatically.
-4. Render builds and deploys automatically on every push to `main`. Create an
-   admin user for `/admin/` once, from Render's dashboard **Shell** tab:
-   `python manage.py createsuperuser`
+4. Render builds and deploys automatically on every push to `main`. The free plan
+   has no Shell, so the admin account is created on start-up instead: in the service's
+   **Environment**, add `DJANGO_SUPERUSER_USERNAME`, `DJANGO_SUPERUSER_EMAIL` and
+   `DJANGO_SUPERUSER_PASSWORD`, save (it redeploys), sign in at `/admin/`, then delete
+   `DJANGO_SUPERUSER_PASSWORD`. `manage.py ensure_admin` only acts when no admin exists,
+   so it never changes an existing account.
 5. **Known limitation of the free tier**: the site "sleeps" after 15 minutes
    with no traffic, so the first visitor after a quiet spell waits ~30–60
    seconds for it to wake up. That's a Render free-tier trade-off, not a bug.

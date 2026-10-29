@@ -259,3 +259,35 @@ class NavigationTests(TestCase):
         self.assertContains(response, '>Home</a>')
         self.assertContains(response, 'class="is-current" aria-current="page">Packages</a>')
 
+
+class EnsureAdminCommandTests(TestCase):
+    def _run(self, **env):
+        import os
+        from io import StringIO
+        from unittest import mock
+
+        from django.core.management import call_command
+
+        with mock.patch.dict(os.environ, env, clear=False):
+            call_command("ensure_admin", stdout=StringIO(), stderr=StringIO())
+
+    def test_creates_admin_once_and_never_changes_it(self):
+        from django.contrib.auth import get_user_model
+
+        User = get_user_model()
+        self._run(DJANGO_SUPERUSER_USERNAME="kimaru", DJANGO_SUPERUSER_EMAIL="info@nabec.co.ke",
+                  DJANGO_SUPERUSER_PASSWORD="a-long-and-unusual-passphrase-42")  # fmt: skip
+        admin = User.objects.get(username="kimaru")
+        self.assertTrue(admin.is_superuser)
+        self._run(DJANGO_SUPERUSER_USERNAME="kimaru", DJANGO_SUPERUSER_PASSWORD="something-else-entirely-77")
+        admin.refresh_from_db()
+        self.assertTrue(admin.check_password("a-long-and-unusual-passphrase-42"))
+        self.assertEqual(User.objects.count(), 1)
+
+    def test_weak_password_or_missing_settings_create_nothing(self):
+        from django.contrib.auth import get_user_model
+
+        self._run(DJANGO_SUPERUSER_USERNAME="kimaru", DJANGO_SUPERUSER_PASSWORD="123")
+        self._run(DJANGO_SUPERUSER_USERNAME="", DJANGO_SUPERUSER_PASSWORD="")
+        self.assertEqual(get_user_model().objects.count(), 0)
+
