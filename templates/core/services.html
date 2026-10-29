@@ -5,13 +5,33 @@
 <section class="section page-header">
   <div class="container">
     <span class="eyebrow">Services</span>
-    <h1>Cloud engineering and data protection, end to end.</h1>
-    <p class="lead">From architecture and migration to ongoing managed key protection, we cover the full lifecycle of secure multi-cloud adoption.</p>
+    <h1>Get online, then grow securely across clouds.</h1>
+    <p class="lead">From your first domain, email and website to ongoing managed key protection, we cover the full journey: getting online and adopting the cloud securely.</p>
   </div>
 </section>
 
+{% if online_services %}
 <section class="section">
-  <div class="container grid grid-2">
+  <div class="container">
+    <h2 class="group-title">Get online</h2>
+    <div class="grid grid-2">
+      {% for service in online_services %}
+      <div class="card card-lg" id="{{ service.slug }}">
+        <div class="card-icon icon-tile">{{ service.icon|default:"🌐" }}</div>
+        <h2>{{ service.title }}</h2>
+        <p>{{ service.summary }}</p>
+        {% if service.description %}<p class="muted">{{ service.description }}</p>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="section{% if online_services %} section-alt{% endif %}">
+  <div class="container">
+  {% if online_services %}<h2 class="group-title">Cloud &amp; data protection</h2>{% endif %}
+  <div class="grid grid-2">
     {% for service in services %}
     <div class="card card-lg">
       <div class="card-icon">{{ service.icon|default:"☁" }}</div>
@@ -42,9 +62,10 @@
     </div>
     {% endfor %}
   </div>
+  </div>
 </section>
 
-<section class="section section-alt text-center">
+<section class="section text-center">
   <div class="container">
     <h2>Not sure which service fits your business?</h2>
     <p class="lead">Tell us where you are today and we'll recommend an engagement model.</p>

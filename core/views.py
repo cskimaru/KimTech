@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import ContactForm
 from .middleware import get_client_ip
-from .models import Package, Partner, Service
+from .models import ContactMessage, Package, Partner, Service
 
 logger = logging.getLogger(__name__)
 
@@ -17,8 +17,10 @@ CONTACT_RATE_LIMIT_WINDOW_SECONDS = 10 * 60
 
 
 def home(request):
+    published = Service.objects.filter(is_published=True)
     context = {
-        "services": Service.objects.filter(is_published=True)[:4],
+        "online_services": published.filter(category="online"),
+        "services": published.filter(category="cloud")[:4],
         "partners": Partner.objects.filter(is_published=True),
     }
     return render(request, "core/home.html", context)
@@ -29,7 +31,11 @@ def about(request):
 
 
 def services(request):
-    context = {"services": Service.objects.filter(is_published=True)}
+    published = Service.objects.filter(is_published=True)
+    context = {
+        "online_services": published.filter(category="online"),
+        "services": published.filter(category="cloud"),
+    }
     return render(request, "core/services.html", context)
 
 
@@ -50,7 +56,11 @@ def partner_detail(request, slug):
 
 
 def packages(request):
-    context = {"packages": Package.objects.filter(is_published=True)}
+    published = Package.objects.filter(is_published=True)
+    context = {
+        "online_packages": published.filter(category="online"),
+        "packages": published.filter(category="cloud"),
+    }
     return render(request, "core/packages.html", context)
 
 
@@ -97,7 +107,10 @@ def contact(request):
             )
             return redirect("contact")
     else:
-        form = ContactForm()
+        # Links such as /contact/?service=memorial arrive with that service already chosen.
+        choices = dict(ContactMessage.SERVICE_CHOICES)
+        service = request.GET.get("service", "")
+        form = ContactForm(initial={"service_interest": service} if service in choices else None)
 
     return render(request, "core/contact.html", {"form": form})
 

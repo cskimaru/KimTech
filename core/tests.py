@@ -51,7 +51,8 @@ class PublicPagesTests(TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_old_thales_partnership_url_redirects(self):
-        Partner.objects.create(name="Thales", slug="thales", one_liner="x", about="x")
+        # The starter content already includes Thales; create it only if it's missing.
+        Partner.objects.get_or_create(slug="thales", defaults={"name": "Thales", "one_liner": "x", "about": "x"})
         response = self.client.get("/thales-partnership/")
         self.assertRedirects(response, reverse("partner_detail", args=["thales"]), status_code=301)
 
@@ -200,3 +201,40 @@ class SecurityHeadersTests(TestCase):
     def test_admin_page_is_not_forced_into_site_csp(self):
         response = self.client.get(reverse("admin:login"))
         self.assertNotIn("Content-Security-Policy", response.headers)
+
+
+class GetOnlineContentTests(TestCase):
+    """The Get online services, packages and memorial section, seeded on first deploy."""
+
+    def test_starter_content_is_seeded_by_migrations(self):
+        self.assertTrue(Service.objects.filter(slug="memorial-websites", category="online").exists())
+        self.assertEqual(Service.objects.filter(category="online").count(), 6)
+        self.assertEqual(Service.objects.filter(category="cloud").count(), 4)
+        self.assertEqual(Package.objects.filter(category="online").count(), 4)
+        self.assertTrue(Partner.objects.filter(slug="thales", status="planned").exists())
+
+    def test_home_shows_both_groups_memorial_section_and_whatsapp(self):
+        response = self.client.get(reverse("home"))
+        self.assertContains(response, "Everything you need to be online")
+        self.assertContains(response, "Business email")
+        self.assertContains(response, "Keep their story, together")
+        self.assertContains(response, "Cloud &amp; Multi-Cloud Consulting")
+        self.assertContains(response, "https://wa.me/254702857036")
+
+    def test_unpublished_online_service_is_hidden(self):
+        Service.objects.filter(slug="cloud-backup").update(is_published=False)
+        response = self.client.get(reverse("services"))
+        self.assertContains(response, "Business email")
+        self.assertNotContains(response, "Cloud backup")
+
+    def test_packages_page_groups_online_and_cloud_packages(self):
+        response = self.client.get(reverse("packages"))
+        self.assertContains(response, "Memorial Website")
+        self.assertContains(response, "Multi-Cloud Key Protection")
+
+    def test_contact_link_preselects_the_service(self):
+        response = self.client.get(reverse("contact") + "?service=memorial")
+        self.assertContains(response, '<option value="memorial" selected>')
+        response = self.client.get(reverse("contact") + "?service=nonsense")
+        self.assertContains(response, '<option value="other" selected>')
+

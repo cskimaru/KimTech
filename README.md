@@ -33,8 +33,7 @@ pip install -r requirements.txt
 
 cp .env.example .env      # then edit SECRET_KEY etc.
 
-python manage.py migrate
-python manage.py loaddata initial_content   # seeds services/partners/packages/engagement models
+python manage.py migrate        # also inserts the starter content (services, partners, packages)
 python manage.py createsuperuser
 python manage.py runserver
 ```
@@ -122,6 +121,17 @@ The included `Procfile` runs migrations, collects static files, and starts
 Gunicorn — works on Railway, Heroku-style platforms, etc.
 
 ## Content model
+
+The starter content lives in `core/fixtures/initial_content.json`. Migration
+`0003_seed_starter_content` inserts any of it that's missing on `migrate`, so a fresh
+deploy shows a complete site; it never changes rows that already exist or were edited
+in the admin.
+
+Services and packages have a **category**: *Get online* (domains, business email,
+websites, memorial websites, cloud backup, email & SMS campaigns) or *Cloud & data
+protection*. The home, Services and Packages pages show each group separately. The
+WhatsApp chat button uses `COMPANY_WHATSAPP` (international format without "+",
+default `254702857036`).
 
 - `core.Service` — service line cards (Services page + homepage)
 - `core.Partner` — a vendor (e.g. Thales, eMudhra), with a `status` of

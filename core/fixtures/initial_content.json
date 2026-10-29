@@ -11,7 +11,8 @@
       "order": 1,
       "is_published": true,
       "created_at": "2026-01-01T00:00:00Z",
-      "updated_at": "2026-01-01T00:00:00Z"
+      "updated_at": "2026-01-01T00:00:00Z",
+      "category": "cloud"
     }
   },
   {
@@ -26,7 +27,8 @@
       "order": 2,
       "is_published": true,
       "created_at": "2026-01-01T00:00:00Z",
-      "updated_at": "2026-01-01T00:00:00Z"
+      "updated_at": "2026-01-01T00:00:00Z",
+      "category": "cloud"
     }
   },
   {
@@ -41,7 +43,8 @@
       "order": 3,
       "is_published": true,
       "created_at": "2026-01-01T00:00:00Z",
-      "updated_at": "2026-01-01T00:00:00Z"
+      "updated_at": "2026-01-01T00:00:00Z",
+      "category": "cloud"
     }
   },
   {
@@ -56,10 +59,10 @@
       "order": 4,
       "is_published": true,
       "created_at": "2026-01-01T00:00:00Z",
-      "updated_at": "2026-01-01T00:00:00Z"
+      "updated_at": "2026-01-01T00:00:00Z",
+      "category": "cloud"
     }
   },
-
   {
     "model": "core.partner",
     "pk": 1,
@@ -92,7 +95,6 @@
       "updated_at": "2026-01-01T00:00:00Z"
     }
   },
-
   {
     "model": "core.partnerbenefit",
     "pk": 1,
@@ -165,7 +167,6 @@
       "updated_at": "2026-01-01T00:00:00Z"
     }
   },
-
   {
     "model": "core.engagementmodel",
     "pk": 1,
@@ -250,7 +251,6 @@
       "updated_at": "2026-01-01T00:00:00Z"
     }
   },
-
   {
     "model": "core.package",
     "pk": 1,
@@ -264,7 +264,8 @@
       "order": 1,
       "is_published": true,
       "created_at": "2026-01-01T00:00:00Z",
-      "updated_at": "2026-01-01T00:00:00Z"
+      "updated_at": "2026-01-01T00:00:00Z",
+      "category": "cloud"
     }
   },
   {
@@ -280,7 +281,8 @@
       "order": 2,
       "is_published": true,
       "created_at": "2026-01-01T00:00:00Z",
-      "updated_at": "2026-01-01T00:00:00Z"
+      "updated_at": "2026-01-01T00:00:00Z",
+      "category": "cloud"
     }
   },
   {
@@ -296,7 +298,8 @@
       "order": 3,
       "is_published": true,
       "created_at": "2026-01-01T00:00:00Z",
-      "updated_at": "2026-01-01T00:00:00Z"
+      "updated_at": "2026-01-01T00:00:00Z",
+      "category": "cloud"
     }
   },
   {
@@ -312,7 +315,172 @@
       "order": 4,
       "is_published": true,
       "created_at": "2026-01-01T00:00:00Z",
-      "updated_at": "2026-01-01T00:00:00Z"
+      "updated_at": "2026-01-01T00:00:00Z",
+      "category": "cloud"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 5,
+    "fields": {
+      "category": "online",
+      "title": "Domain names",
+      "slug": "domain-names",
+      "icon": "🌐",
+      "summary": "Your own address, like yourname.co.ke or .com, registered in your name and renewed on time.",
+      "description": "We register and renew .co.ke, .com and other domains in your name, and manage DNS, SSL and protection through Cloudflare so your address always works.",
+      "order": 1,
+      "is_published": true,
+      "created_at": "2026-10-29T00:00:00Z",
+      "updated_at": "2026-10-29T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 6,
+    "fields": {
+      "category": "online",
+      "title": "Business email",
+      "slug": "business-email",
+      "icon": "✉️",
+      "summary": "you@yourname.co.ke, delivered to the inbox you already use and sent under your own name.",
+      "description": "Professional email on your own domain: routed to Gmail or Outlook, sent with your domain's signature (SPF, DKIM, DMARC) so it lands in inboxes, not spam.",
+      "order": 2,
+      "is_published": true,
+      "created_at": "2026-10-29T00:00:00Z",
+      "updated_at": "2026-10-29T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 7,
+    "fields": {
+      "category": "online",
+      "title": "Websites",
+      "slug": "websites",
+      "icon": "🖥️",
+      "summary": "Fast, secure, mobile-friendly websites for shops, churches, schools and professionals.",
+      "description": "Design, build and hosting, with HTTPS, protection and backups included, and changes whenever you need them.",
+      "order": 3,
+      "is_published": true,
+      "created_at": "2026-10-29T00:00:00Z",
+      "updated_at": "2026-10-29T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 8,
+    "fields": {
+      "category": "online",
+      "title": "Memorial websites",
+      "slug": "memorial-websites",
+      "icon": "🕊️",
+      "summary": "A lasting home for a loved one's story, photos and tributes that the whole family can add to.",
+      "description": "Life chapters that invited family members fill with stories and photographs, tributes approved by the family, a private preview first, and daily backups of every photo.",
+      "order": 4,
+      "is_published": true,
+      "created_at": "2026-10-29T00:00:00Z",
+      "updated_at": "2026-10-29T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 9,
+    "fields": {
+      "category": "online",
+      "title": "Cloud backup",
+      "slug": "cloud-backup",
+      "icon": "🗂️",
+      "summary": "Photos and documents copied safely to the cloud every day, so nothing is lost with a phone or laptop.",
+      "description": "Automatic, encrypted backups to reliable cloud storage, with easy restore when you need a file back.",
+      "order": 5,
+      "is_published": true,
+      "created_at": "2026-10-29T00:00:00Z",
+      "updated_at": "2026-10-29T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 10,
+    "fields": {
+      "category": "online",
+      "title": "Email & SMS campaigns",
+      "slug": "email-sms-campaigns",
+      "icon": "📣",
+      "summary": "Newsletters, announcements and bulk messages to your customers or congregation, set up and run for you.",
+      "description": "Mailing lists, branded templates and sending on your own domain, plus bulk SMS and WhatsApp, with reports on who opened and clicked.",
+      "order": 6,
+      "is_published": true,
+      "created_at": "2026-10-29T00:00:00Z",
+      "updated_at": "2026-10-29T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.package",
+    "pk": 5,
+    "fields": {
+      "category": "online",
+      "partner": null,
+      "name": "Starter",
+      "tagline": "Domain + business email",
+      "price_description": "KES 3,500 first year",
+      "features": "A .co.ke domain in your name\nBusiness email address on your domain\nFree SSL and protection\nRenewal from KES 2,500 a year",
+      "is_featured": false,
+      "order": 1,
+      "is_published": true,
+      "created_at": "2026-10-29T00:00:00Z",
+      "updated_at": "2026-10-29T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.package",
+    "pk": 6,
+    "fields": {
+      "category": "online",
+      "partner": null,
+      "name": "Business Website",
+      "tagline": "Everything in Starter, plus a website",
+      "price_description": "From KES 15,000 setup",
+      "features": "Website up to 5 pages\nWhatsApp and map on your site\nHosting and care from KES 6,000 a year",
+      "is_featured": false,
+      "order": 2,
+      "is_published": true,
+      "created_at": "2026-10-29T00:00:00Z",
+      "updated_at": "2026-10-29T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.package",
+    "pk": 7,
+    "fields": {
+      "category": "online",
+      "partner": null,
+      "name": "Memorial Website",
+      "tagline": "A lasting home for their story",
+      "price_description": "From KES 15,000 setup",
+      "features": "Domain in the family's name\nFamily accounts, life chapters and tributes\nDaily photo backups\nHosting from KES 18,000 a year",
+      "is_featured": true,
+      "order": 3,
+      "is_published": true,
+      "created_at": "2026-10-29T00:00:00Z",
+      "updated_at": "2026-10-29T00:00:00Z"
+    }
+  },
+  {
+    "model": "core.package",
+    "pk": 8,
+    "fields": {
+      "category": "online",
+      "partner": null,
+      "name": "Cloud & Campaigns",
+      "tagline": "Backup, newsletters and bulk SMS",
+      "price_description": "From KES 800/month",
+      "features": "Cloud backup for photos and files\nEmail newsletters and bulk SMS\nSet up and run for you\nQuoted by size and volume",
+      "is_featured": false,
+      "order": 4,
+      "is_published": true,
+      "created_at": "2026-10-29T00:00:00Z",
+      "updated_at": "2026-10-29T00:00:00Z"
     }
   }
 ]

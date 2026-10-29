@@ -386,3 +386,43 @@ a:hover { text-decoration: underline; }
 .site-footer { background: #0b1220; }
 .site-footer .brand-name { color: #fff; }
 .grid + .text-center { margin-top: 2rem; }
+
+/* ---- Get online, memorial websites and WhatsApp ---- */
+.hero-points { list-style: none; padding: 0; margin: 1.6rem 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem 1.6rem; color: #cbd5e1; font-size: 0.95rem; }
+.hero-points li::before { content: "✓"; color: #67e8f9; font-weight: 700; margin-right: 0.45rem; }
+
+.eyebrow-center { display: block; text-align: center; }
+.group-title { font-size: clamp(1.3rem, 2.4vw, 1.6rem); margin-bottom: 1.5rem; padding-left: 0.85rem; border-left: 4px solid var(--color-accent); }
+
+.icon-tile {
+  display: inline-grid; place-items: center; width: 3rem; height: 3rem; border-radius: 12px; font-size: 1.5rem;
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.12), rgba(6, 182, 212, 0.16));
+}
+.card-highlight { background: linear-gradient(160deg, #eef2ff, #ecfeff); border-color: rgba(37, 99, 235, 0.3); }
+.card-highlight .icon-tile { background: #fff; }
+
+.split { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 3rem; align-items: center; }
+.memorial-preview { margin: 0; border-radius: 18px; padding: 12px; background: linear-gradient(140deg, #c7d2fe, #a5f3fc); box-shadow: var(--shadow); }
+.memorial-mock {
+  border-radius: 12px; padding: 2rem 1.2rem; text-align: center;
+  background:
+    radial-gradient(14rem 10rem at 0% 0%, rgba(201, 182, 226, 0.85), transparent 70%),
+    radial-gradient(14rem 10rem at 100% 100%, rgba(176, 221, 218, 0.85), transparent 70%),
+    #fdfcfe;
+}
+.mock-heading { font-family: "Segoe Script", "Brush Script MT", cursive; font-size: 1.5rem; color: #6b4c9a; margin: 0; display: inline-block; background: rgba(120, 118, 124, 0.16); padding: 0 0.35em; }
+.mock-portrait { width: 96px; height: 120px; border-radius: 50%; margin: 1rem auto; background: linear-gradient(160deg, #e9e2f4, #fff); border: 6px solid #fff; box-shadow: 0 12px 26px -16px rgba(74, 41, 84, 0.6); }
+.mock-name { font-family: Georgia, "Times New Roman", serif; font-size: 1.7rem; color: #4a2954; margin: 0; }
+.mock-sub { font-family: Georgia, serif; font-style: italic; color: #625a6c; margin: 0.1rem 0 1rem; }
+.mock-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+.mock-chips span { font-size: 0.75rem; background: #fff; border: 1px solid #e2e8f0; border-radius: 999px; padding: 0.15rem 0.6rem; color: #625a6c; }
+
+.whatsapp-float {
+  position: fixed; right: 1.1rem; bottom: 1.1rem; z-index: 60; width: 56px; height: 56px; border-radius: 50%;
+  display: grid; place-items: center; color: #fff; background: #25d366; box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.45);
+}
+.whatsapp-float:hover { filter: brightness(1.06); text-decoration: none; }
+
+@media (max-width: 900px) {
+  .split { grid-template-columns: 1fr; }
+}

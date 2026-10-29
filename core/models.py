@@ -11,9 +11,16 @@ class TimestampedModel(models.Model):
         abstract = True
 
 
+CATEGORY_CHOICES = [
+    ("online", "Get online: domains, email, websites, memorials, backup, campaigns"),
+    ("cloud", "Cloud & data protection consulting"),
+]
+
+
 class Service(TimestampedModel):
     """A consulting service line shown on the Services page (editable in admin)."""
 
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default="cloud")
     title = models.CharField(max_length=120)
     slug = models.SlugField(max_length=140, unique=True, blank=True)
     icon = models.CharField(
@@ -117,6 +124,7 @@ class EngagementModel(TimestampedModel):
 class Package(TimestampedModel):
     """A packaged SME offering, e.g. tiers of the Multi-Cloud Key Protection Package."""
 
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default="cloud")
     partner = models.ForeignKey(
         Partner, on_delete=models.SET_NULL, related_name="packages", null=True, blank=True
     )
@@ -144,6 +152,11 @@ class Package(TimestampedModel):
 
 class ContactMessage(TimestampedModel):
     SERVICE_CHOICES = [
+        ("domain_email", "Domain & business email"),
+        ("website", "Website"),
+        ("memorial", "Memorial website"),
+        ("backup", "Cloud backup"),
+        ("campaigns", "Email & SMS campaigns"),
         ("cloud", "Cloud & Multi-Cloud Consulting"),
         ("thales", "Thales Data Protection (DPoD / CipherTrust)"),
         ("emudhra", "eMudhra Digital Signatures & PKI"),

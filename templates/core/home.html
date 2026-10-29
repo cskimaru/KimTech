@@ -3,25 +3,80 @@
 {% block content %}
 <section class="hero">
   <div class="container hero-inner">
-    <span class="eyebrow">Nairobi &middot; Cloud &amp; Data Protection Consulting</span>
-    <h1>Multi-cloud engineering and enterprise-grade digital trust, sized for growing businesses.</h1>
+    <span class="eyebrow">Nairobi &middot; Get online &middot; Cloud &amp; Data Protection</span>
+    <h1>From your first domain to multi-cloud security, connected and protected.</h1>
     <p class="lead">
-      {{ COMPANY_NAME }} helps SMEs and enterprises across East Africa design, secure and
-      run workloads across AWS, Azure and GCP — and is building toward partnerships with
-      global security and digital-identity vendors, aiming to bring enterprise-grade key
-      management, encryption and digital signature platforms within reach of businesses
-      that could never justify the cost of building it in-house.
+      {{ COMPANY_NAME }} gets families, churches, schools and businesses online with domains,
+      business email, websites and safe cloud backup, and helps SMEs and enterprises across
+      East Africa design, secure and run workloads across AWS, Azure and GCP.
     </p>
     <div class="cta-row">
       <a class="btn btn-primary btn-lg" href="{% url 'contact' %}">Book a free consultation</a>
-      <a class="btn btn-outline btn-lg" href="{% url 'partnerships' %}">Explore our partnerships</a>
+      {% if COMPANY_WHATSAPP_URL %}<a class="btn btn-outline btn-lg" href="{{ COMPANY_WHATSAPP_URL }}" target="_blank" rel="noopener">Chat on WhatsApp</a>{% endif %}
     </div>
+    <ul class="hero-points">
+      <li>Registered Kenyan business</li>
+      <li>Free SSL and protection on every site</li>
+      <li>Daily backups</li>
+    </ul>
   </div>
 </section>
 
+{% if online_services %}
 <section class="section">
   <div class="container">
-    <h2 class="section-title">What we do</h2>
+    <span class="eyebrow eyebrow-center">Get online</span>
+    <h2 class="section-title">Everything you need to be online</h2>
+    <div class="grid grid-3">
+      {% for service in online_services %}
+      <div class="card{% if service.slug == 'memorial-websites' %} card-highlight{% endif %}">
+        <div class="card-icon icon-tile">{{ service.icon|default:"🌐" }}</div>
+        <h3>{{ service.title }}</h3>
+        <p>{{ service.summary }}</p>
+        {% if service.slug == 'memorial-websites' %}<a class="link-arrow" href="#memorial">Learn more &rarr;</a>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    <p class="text-center"><a class="btn btn-outline" href="{% url 'packages' %}">See starter packages</a></p>
+  </div>
+</section>
+
+<section class="section section-alt" id="memorial">
+  <div class="container split">
+    <div>
+      <span class="eyebrow">Memorial websites</span>
+      <h2>Keep their story, together</h2>
+      <p>After the farewell, the memories remain with many people: children, grandchildren,
+        friends, church members. We build a private, beautiful website where invited family
+        members add stories and photographs to chapters of their loved one's life, and
+        visitors leave tributes and light a candle.</p>
+      <ul class="feature-list">
+        <li>Life chapters: roots, family, faith, work, final years</li>
+        <li>Family members add photos and stories from their phones</li>
+        <li>Tributes appear only after the family approves them</li>
+        <li>Calm watercolour designs; the family chooses the colours</li>
+        <li>Private preview first, then a lasting address in their name</li>
+        <li>Every photo backed up daily</li>
+      </ul>
+      <a class="btn btn-primary" href="{% url 'contact' %}?service=memorial">Ask about a memorial site</a>
+    </div>
+    <figure class="memorial-preview" aria-hidden="true">
+      <div class="memorial-mock">
+        <p class="mock-heading">In loving memory</p>
+        <div class="mock-portrait"></div>
+        <p class="mock-name">Their name</p>
+        <p class="mock-sub">Beloved mother, grandmother and friend</p>
+        <div class="mock-chips"><span>Roots</span><span>Family</span><span>Faith</span><span>Gallery</span><span>Tributes</span></div>
+      </div>
+    </figure>
+  </div>
+</section>
+{% endif %}
+
+<section class="section">
+  <div class="container">
+    <span class="eyebrow eyebrow-center">Cloud &amp; data protection</span>
+    <h2 class="section-title">For growing businesses</h2>
     <div class="grid grid-4">
       {% for service in services %}
       <div class="card">

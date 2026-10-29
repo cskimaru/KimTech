@@ -12,8 +12,9 @@ from .models import (
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ("title", "order", "is_published", "updated_at")
+    list_display = ("title", "category", "order", "is_published", "updated_at")
     list_editable = ("order", "is_published")
+    list_filter = ("category", "is_published")
     prepopulated_fields = {"slug": ("title",)}
     search_fields = ("title", "summary")
 
@@ -47,9 +48,9 @@ class EngagementModelAdmin(admin.ModelAdmin):
 
 @admin.register(Package)
 class PackageAdmin(admin.ModelAdmin):
-    list_display = ("name", "partner", "price_description", "is_featured", "order", "is_published")
+    list_display = ("name", "category", "partner", "price_description", "is_featured", "order", "is_published")
     list_editable = ("order", "is_published", "is_featured")
-    list_filter = ("partner",)
+    list_filter = ("category", "partner")
 
 
 @admin.register(ContactMessage)

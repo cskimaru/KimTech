@@ -10,8 +10,34 @@
   </div>
 </section>
 
+{% if online_packages %}
 <section class="section">
   <div class="container">
+    <h2 class="group-title">Get online</h2>
+    <div class="grid grid-4">
+      {% for package in online_packages %}
+      <div class="card {% if package.is_featured %}card-featured{% endif %}">
+        {% if package.is_featured %}<span class="badge">Most requested</span>{% endif %}
+        <h3>{{ package.name }}</h3>
+        {% if package.tagline %}<p class="muted">{{ package.tagline }}</p>{% endif %}
+        <p class="price">{{ package.price_description }}</p>
+        <ul class="feature-list">
+          {% for feature in package.feature_list %}
+          <li>{{ feature }}</li>
+          {% endfor %}
+        </ul>
+        <a class="btn {% if package.is_featured %}btn-primary{% else %}btn-outline{% endif %}" href="{% url 'contact' %}">Enquire</a>
+      </div>
+      {% endfor %}
+    </div>
+    <p class="muted text-center">Starting prices; we confirm a final quote after a short chat. Pay by M-Pesa or bank transfer.</p>
+  </div>
+</section>
+{% endif %}
+
+<section class="section{% if online_packages %} section-alt{% endif %}">
+  <div class="container">
+    {% if online_packages %}<h2 class="group-title">Cloud &amp; data protection</h2>{% endif %}
     <div class="grid grid-3">
       {% for package in packages %}
       <div class="card card-lg {% if package.is_featured %}card-featured{% endif %}">

@@ -131,5 +131,7 @@ COMPANY_LOCATION = "Nairobi, Kenya"
 COMPANY_TAGLINE = "Multi-Cloud Engineering & Data Protection, Delivered as a Service"
 COMPANY_EMAIL = env("CONTACT_NOTIFY_EMAIL", default="info@nabec.co.ke")
 COMPANY_PHONES = ["+254 702 857 036", "+81 70-5659-9911"]
+# WhatsApp number in international format without "+" (used for wa.me chat links).
+COMPANY_WHATSAPP = env("COMPANY_WHATSAPP", default="254702857036")
 
 LOGIN_URL = "admin:login"
