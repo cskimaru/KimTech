@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Order {{ order.reference }} — {{ COMPANY_NAME }}{% endblock %}
+
+{% block content %}
+<section class="section page-header">
+  <div class="container">
+    <span class="eyebrow">Your order</span>
+    <h1>Order {{ order.reference }}</h1>
+    <p class="lead">Thank you, {{ order.name }}. Keep this page's link: it's your private order page. A copy of the details below has gone to our team.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container order-layout">
+    <div class="card card-lg">
+      <p><span class="status status-{{ order.status }}">{{ order.get_status_display }}</span></p>
+      <ul class="feature-list">
+        {% if order.package %}<li><strong>Package:</strong> {{ order.package.name }} ({{ order.package.price_description }})</li>{% endif %}
+        <li><strong>Services:</strong> {{ order.service_labels|join:", " }}</li>
+        {% if order.domain_name %}<li><strong>Domain:</strong> {{ order.domain_name }}</li>{% endif %}
+        {% if order.amount_quoted %}<li><strong>Amount to pay:</strong> KES {{ order.amount_quoted }}</li>{% endif %}
+        {% if order.mpesa_code %}<li><strong>M-Pesa code received:</strong> {{ order.mpesa_code }}</li>{% endif %}
+      </ul>
+      {% if order.status == "new" %}
+      <p class="muted">{% if order.domain_name %}We'll confirm that <strong>{{ order.domain_name }}</strong> is available before setting it up. {% endif %}{% if not order.amount_quoted %}If you're unsure of the amount, wait for our confirmation on WhatsApp or email before paying.{% endif %}</p>
+      {% endif %}
+    </div>
+
+    <aside class="order-aside">
+      {% if order.status == "new" or order.status == "payment_sent" %}
+      <div class="card pay-card">
+        <h3>Pay with M-Pesa</h3>
+        <ol class="steps">
+          <li>Go to <strong>M-Pesa</strong> &rarr; <strong>Lipa na M-Pesa</strong> &rarr; <strong>Buy Goods and Services</strong> (or dial <strong>*334#</strong>).</li>
+          <li>Till number: <span class="till">{{ MPESA_TILL }}</span></li>
+          <li>Enter the amount{% if order.amount_quoted %} <strong>KES {{ order.amount_quoted }}</strong>{% endif %} and your M-Pesa PIN.</li>
+          <li>Type the confirmation code from the M-Pesa message below.</li>
+        </ol>
+        <form method="post" novalidate>
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="{{ payment_form.mpesa_code.id_for_label }}">{{ payment_form.mpesa_code.label }}</label>
+            {{ payment_form.mpesa_code }}
+            {% for error in payment_form.mpesa_code.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+          </div>
+          <button type="submit" class="btn btn-primary">{% if order.mpesa_code %}Update code{% else %}I've paid{% endif %}</button>
+        </form>
+        <p class="field-help">Reference for your records: <strong>{{ order.reference }}</strong></p>
+      </div>
+      {% else %}
+      <div class="card"><h3>Payment received</h3><p>Thank you. We're setting up your services and will email your logins to {{ order.email }}.</p></div>
+      {% endif %}
+      <div class="card">
+        <h3>Need help?</h3>
+        <p>Quote <strong>{{ order.reference }}</strong>{% if COMPANY_WHATSAPP_URL %} on <a href="{{ COMPANY_WHATSAPP_URL }}" target="_blank" rel="noopener">WhatsApp</a> or{% endif %} at <a href="mailto:{{ COMPANY_EMAIL }}">{{ COMPANY_EMAIL }}</a>.</p>
+      </div>
+    </aside>
+  </div>
+</section>
+{% endblock %}

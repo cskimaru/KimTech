@@ -16,6 +16,7 @@ class StaticViewSitemap(Sitemap):
             "partnerships",
             "packages",
             "contact",
+            "order",
             "privacy_policy",
         ]
 

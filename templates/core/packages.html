@@ -26,11 +26,11 @@
           <li>{{ feature }}</li>
           {% endfor %}
         </ul>
-        <a class="btn {% if package.is_featured %}btn-primary{% else %}btn-outline{% endif %}" href="{% url 'contact' %}">Enquire</a>
+        <a class="btn {% if package.is_featured %}btn-primary{% else %}btn-outline{% endif %}" href="{% url 'order' %}?package={{ package.pk }}">Order now</a>
       </div>
       {% endfor %}
     </div>
-    <p class="muted text-center">Starting prices; we confirm a final quote after a short chat. Pay by M-Pesa or bank transfer.</p>
+    <p class="muted text-center">Starting prices; we confirm the final amount before you pay. Pay by M-Pesa, Buy Goods Till <strong>{{ MPESA_TILL }}</strong>.</p>
   </div>
 </section>
 {% endif %}

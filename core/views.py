@@ -5,10 +5,11 @@ from django.core.cache import cache
 from django.core.mail import send_mail
 from django.conf import settings
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 
-from .forms import ContactForm
+from .forms import ContactForm, OrderForm, PaymentCodeForm
 from .middleware import get_client_ip
-from .models import ContactMessage, Package, Partner, Service
+from .models import ContactMessage, Order, Package, Partner, Service
 
 logger = logging.getLogger(__name__)
 
@@ -113,6 +114,81 @@ def contact(request):
         form = ContactForm(initial={"service_interest": service} if service in choices else None)
 
     return render(request, "core/contact.html", {"form": form})
+
+
+def _rate_limited(request, scope):
+    """Count one submission from this visitor; True when they've sent too many recently."""
+    key = f"{scope}-submissions:{get_client_ip(request)}"
+    attempts = cache.get(key, 0)
+    if attempts >= CONTACT_RATE_LIMIT_MAX_ATTEMPTS:
+        return True
+    cache.set(key, attempts + 1, timeout=CONTACT_RATE_LIMIT_WINDOW_SECONDS)
+    return False
+
+
+def _notify(subject, body):
+    notify_to = getattr(settings, "CONTACT_NOTIFY_EMAIL", "")
+    if not notify_to:
+        return
+    try:
+        send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [notify_to], fail_silently=True)
+    except Exception:
+        logger.exception("Failed to send order notification email")
+
+
+def order(request):
+    if request.method == "POST":
+        if _rate_limited(request, "order"):
+            messages.error(request, "You've sent too many orders recently. Please wait a few minutes and try again.")
+            return render(request, "core/order.html", {"form": OrderForm()})
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            o = form.save()
+            _notify(
+                f"New order {o.reference}: {', '.join(o.service_labels())}",
+                f"Order {o.reference}\n"
+                f"Package: {o.package or '-'}\nServices: {', '.join(o.service_labels())}\n"
+                f"Domain: {o.domain_name or '-'}\n\n"
+                f"Name: {o.name}\nEmail: {o.email}\nPhone: {o.phone}\nCompany: {o.company}\n\n{o.notes}",
+            )
+            return redirect("order_detail", token=o.token)
+    else:
+        initial = {}
+        package_id = request.GET.get("package", "")
+        if package_id.isdigit():
+            pkg = Package.objects.filter(pk=int(package_id), is_published=True, category="online").first()
+            if pkg:
+                initial["package"] = pkg
+        service = request.GET.get("service", "")
+        if service in dict(Order.SERVICE_CHOICES):
+            initial["services"] = [service]
+        form = OrderForm(initial=initial)
+    return render(request, "core/order.html", {"form": form})
+
+
+def order_detail(request, token):
+    o = get_object_or_404(Order, token=token)
+    payment_form = PaymentCodeForm()
+    if request.method == "POST" and o.status in ("new", "payment_sent"):
+        if _rate_limited(request, "payment"):
+            messages.error(request, "Too many attempts. Please wait a few minutes and try again.")
+        else:
+            payment_form = PaymentCodeForm(request.POST)
+            if payment_form.is_valid():
+                o.mpesa_code = payment_form.cleaned_data["mpesa_code"]
+                o.status = "payment_sent"
+                o.save(update_fields=["mpesa_code", "status", "updated_at"])
+                _notify(
+                    f"Payment code for {o.reference}: {o.mpesa_code}",
+                    f"{o.name} ({o.phone}) says they paid for order {o.reference}.\n"
+                    f"M-Pesa code: {o.mpesa_code}\n\nCheck it on the Till, then mark the order Paid in the admin.",
+                )
+                messages.success(request, "Thank you! We'll confirm your payment and set everything up.")
+                return redirect(reverse("order_detail", kwargs={"token": o.token}))
+    response = render(request, "core/order_detail.html", {"order": o, "payment_form": payment_form})
+    response["X-Robots-Tag"] = "noindex, nofollow"  # private page: the link is the customer's key
+    response["Cache-Control"] = "private, no-store"
+    return response
 
 
 def privacy_policy(request):

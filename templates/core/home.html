@@ -11,7 +11,8 @@
       East Africa design, secure and run workloads across AWS, Azure and GCP.
     </p>
     <div class="cta-row">
-      <a class="btn btn-primary btn-lg" href="{% url 'contact' %}">Book a free consultation</a>
+      <a class="btn btn-primary btn-lg" href="{% url 'order' %}">Order domain &amp; hosting</a>
+      <a class="btn btn-outline btn-lg" href="{% url 'contact' %}">Book a free consultation</a>
       {% if COMPANY_WHATSAPP_URL %}<a class="btn btn-outline btn-lg" href="{{ COMPANY_WHATSAPP_URL }}" target="_blank" rel="noopener">Chat on WhatsApp</a>{% endif %}
     </div>
     <ul class="hero-points">
@@ -37,7 +38,7 @@
       </div>
       {% endfor %}
     </div>
-    <p class="text-center"><a class="btn btn-outline" href="{% url 'packages' %}">See starter packages</a></p>
+    <p class="text-center"><a class="btn btn-outline" href="{% url 'packages' %}">See starter packages</a> <a class="btn btn-primary" href="{% url 'order' %}">Order now</a></p>
   </div>
 </section>
 

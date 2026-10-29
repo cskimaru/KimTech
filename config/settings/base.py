@@ -138,5 +138,7 @@ COMPANY_EMAIL = env("CONTACT_NOTIFY_EMAIL", default="info@nabec.co.ke")
 COMPANY_PHONES = ["+254 702 857 036", "+81 70-5659-9911"]
 # WhatsApp number in international format without "+" (used for wa.me chat links).
 COMPANY_WHATSAPP = env("COMPANY_WHATSAPP", default="254702857036")
+# Lipa na M-Pesa Buy Goods Till number shown on order pages.
+MPESA_TILL = env("MPESA_TILL", default="1790136")
 
 LOGIN_URL = "admin:login"

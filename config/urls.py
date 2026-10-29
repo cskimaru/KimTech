@@ -24,6 +24,8 @@ urlpatterns = [
     ),
     path("packages/", views.packages, name="packages"),
     path("contact/", views.contact, name="contact"),
+    path("order/", views.order, name="order"),
+    path("order/<str:token>/", views.order_detail, name="order_detail"),
     path("privacy-policy/", views.privacy_policy, name="privacy_policy"),
     path(
         "sitemap.xml",

@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import (
     ContactMessage,
+    Order,
     EngagementModel,
     Package,
     Partner,
@@ -60,3 +61,32 @@ class ContactMessageAdmin(admin.ModelAdmin):
     list_filter = ("service_interest", "is_read", "created_at")
     search_fields = ("name", "email", "company", "message")
     readonly_fields = ("name", "email", "company", "phone", "service_interest", "message", "created_at")
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ("reference", "name", "phone", "services_display", "domain_name", "status", "mpesa_code", "amount_quoted", "created_at")
+    list_editable = ("status",)
+    list_filter = ("status", "created_at")
+    search_fields = ("reference", "name", "email", "phone", "domain_name", "mpesa_code")
+    readonly_fields = ("reference", "order_page", "created_at", "updated_at")
+    fieldsets = (
+        (None, {"fields": ("reference", "status", "amount_quoted", "mpesa_code", "order_page")}),
+        ("What they ordered", {"fields": ("package", "services", "domain_name", "notes")}),
+        ("Customer", {"fields": ("name", "email", "phone", "company")}),
+        ("Internal", {"fields": ("internal_notes", "created_at", "updated_at")}),
+    )
+
+    @admin.display(description="Services")
+    def services_display(self, obj):
+        return ", ".join(obj.service_labels())
+
+    @admin.display(description="Customer's order page")
+    def order_page(self, obj):
+        from django.urls import reverse
+        from django.utils.html import format_html
+
+        if not obj.pk:
+            return "-"
+        url = reverse("order_detail", kwargs={"token": obj.token})
+        return format_html('<a href="{}" target="_blank" rel="noopener">{}</a> (send this link to the customer if they lose it)', url, url)

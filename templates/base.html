@@ -34,7 +34,8 @@
         <a href="{% url 'packages' %}"{% if page == 'packages' %} class="is-current" aria-current="page"{% endif %}>Packages</a>
         <a href="{% url 'about' %}"{% if page == 'about' %} class="is-current" aria-current="page"{% endif %}>About</a>
         {% endwith %}
-        <a href="{% url 'contact' %}" class="btn btn-primary btn-sm">Get in touch</a>
+        <a href="{% url 'contact' %}"{% if request.resolver_match.url_name == 'contact' %} class="is-current" aria-current="page"{% endif %}>Contact</a>
+        <a href="{% url 'order' %}" class="btn btn-primary btn-sm">Order now</a>
       </nav>
     </div>
   </header>
@@ -76,6 +77,7 @@
         {% endfor %}
         {% if COMPANY_WHATSAPP_URL %}<a href="{{ COMPANY_WHATSAPP_URL }}" target="_blank" rel="noopener">WhatsApp</a>{% endif %}
         <a href="{% url 'contact' %}">Contact form</a>
+        <a href="{% url 'order' %}">Order online</a>
       </div>
       <div>
         <h3>Legal</h3>

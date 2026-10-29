@@ -525,3 +525,21 @@ body::before {
 .primary-nav a.is-current { color: var(--color-primary); position: relative; }
 .primary-nav a.is-current::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; border-radius: 2px; background: var(--gradient-brand); }
 @media (max-width: 720px) { .primary-nav a.is-current::after { right: auto; width: 2rem; } }
+
+/* ---- Ordering ---- */
+.order-layout { display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.5rem; align-items: start; }
+.order-aside { display: grid; gap: 1.5rem; }
+.order-form fieldset { border: 0; padding: 0; margin: 0 0 1.1rem; }
+.order-form legend { font-weight: 600; margin-bottom: 0.5rem; }
+.choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; }
+.choice { display: flex; gap: 0.6rem; align-items: center; padding: 0.6rem 0.8rem; border: 1px solid var(--color-border); border-radius: 10px; background: rgba(255, 255, 255, 0.7); cursor: pointer; font-weight: 500; }
+.choice:has(input:checked) { border-color: var(--color-primary); background: rgba(37, 99, 235, 0.07); }
+.choice input { width: auto; accent-color: var(--color-primary); }
+.order-aside .steps li { margin-bottom: 0.6rem; }
+.till { display: inline-block; font-size: 1.5rem; font-weight: 800; letter-spacing: 0.12em; color: #fff; background: #16a34a; padding: 0.1rem 0.6rem; border-radius: 8px; }
+.pay-card { border-color: rgba(22, 163, 74, 0.4); }
+.status { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 999px; font-weight: 700; font-size: 0.85rem; background: #e2e8f0; color: #334155; }
+.status-payment_sent { background: #fef3c7; color: #92400e; }
+.status-paid, .status-active { background: #dcfce7; color: #166534; }
+.status-cancelled { background: #fee2e2; color: #991b1b; }
+@media (max-width: 900px) { .order-layout { grid-template-columns: 1fr; } .choice-grid { grid-template-columns: 1fr; } }

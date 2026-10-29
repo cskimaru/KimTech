@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Order — {{ COMPANY_NAME }}{% endblock %}
+{% block meta_description %}Order a domain, hosting, business email, cloud storage or a website from {{ COMPANY_NAME }}. Pay easily by M-Pesa.{% endblock %}
+
+{% block content %}
+<section class="section page-header">
+  <div class="container">
+    <span class="eyebrow">Order</span>
+    <h1>Get your domain, hosting and storage in one place.</h1>
+    <p class="lead">Tell us what you need. You'll get an order reference straight away and can pay by M-Pesa; we confirm and set everything up, usually the same day.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container order-layout">
+    <form method="post" class="card card-lg order-form" novalidate>
+      {% csrf_token %}
+      <div class="form-honeypot">{{ form.website }}</div>
+
+      <div class="form-group">
+        <label for="{{ form.package.id_for_label }}">{{ form.package.label }}</label>
+        {{ form.package }}
+        {% for error in form.package.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+      </div>
+
+      <fieldset class="form-group">
+        <legend>{{ form.services.label }}</legend>
+        <div class="choice-grid">
+          {% for choice in form.services %}
+          <label class="choice">{{ choice.tag }}<span>{{ choice.choice_label }}</span></label>
+          {% endfor %}
+        </div>
+        {% for error in form.services.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+      </fieldset>
+
+      {% for field in form.visible_fields %}{% if field.name != "package" and field.name != "services" %}
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}">{{ field.label }}{% if not field.field.required %} <span class="muted">(optional)</span>{% endif %}</label>
+        {{ field }}
+        {% for error in field.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+      </div>
+      {% endif %}{% endfor %}
+
+      {% if form.non_field_errors %}<p class="field-error">{{ form.non_field_errors }}</p>{% endif %}
+      <button type="submit" class="btn btn-primary btn-lg">Place order</button>
+      <p class="field-help">No payment is taken on this page. You'll see how to pay on the next page.</p>
+    </form>
+
+    <aside class="order-aside">
+      <div class="card">
+        <h3>How it works</h3>
+        <ol class="steps">
+          <li><strong>Place your order</strong> and get a reference like <code>NB-7KQ2MX</code>.</li>
+          <li><strong>Pay by M-Pesa</strong> to Buy Goods Till <strong>{{ MPESA_TILL }}</strong>; we confirm the exact amount if your order needs a quote.</li>
+          <li><strong>Enter the M-Pesa code</strong> on your order page.</li>
+          <li><strong>We set it up</strong> and send your logins by email.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>Questions first?</h3>
+        <p>Chat with us{% if COMPANY_WHATSAPP_URL %} on <a href="{{ COMPANY_WHATSAPP_URL }}" target="_blank" rel="noopener">WhatsApp</a> or{% endif %} at <a href="mailto:{{ COMPANY_EMAIL }}">{{ COMPANY_EMAIL }}</a>.</p>
+        <p class="muted"><a href="{% url 'packages' %}">See packages and prices &rarr;</a></p>
+      </div>
+    </aside>
+  </div>
+</section>
+{% endblock %}

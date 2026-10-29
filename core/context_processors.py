@@ -8,5 +8,6 @@ def company_info(request):
         "COMPANY_TAGLINE": settings.COMPANY_TAGLINE,
         "COMPANY_EMAIL": settings.COMPANY_EMAIL,
         "COMPANY_PHONES": settings.COMPANY_PHONES,
+        "MPESA_TILL": settings.MPESA_TILL,
         "COMPANY_WHATSAPP_URL": f"https://wa.me/{settings.COMPANY_WHATSAPP}" if settings.COMPANY_WHATSAPP else "",
     }

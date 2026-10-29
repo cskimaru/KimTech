@@ -210,7 +210,7 @@ class GetOnlineContentTests(TestCase):
         self.assertTrue(Service.objects.filter(slug="memorial-websites", category="online").exists())
         self.assertEqual(Service.objects.filter(category="online").count(), 6)
         self.assertEqual(Service.objects.filter(category="cloud").count(), 4)
-        self.assertEqual(Package.objects.filter(category="online").count(), 4)
+        self.assertEqual(Package.objects.filter(category="online").count(), 6)
         self.assertTrue(Partner.objects.filter(slug="thales", status="planned").exists())
 
     def test_home_shows_both_groups_memorial_section_and_whatsapp(self):
@@ -290,4 +290,64 @@ class EnsureAdminCommandTests(TestCase):
         self._run(DJANGO_SUPERUSER_USERNAME="kimaru", DJANGO_SUPERUSER_PASSWORD="123")
         self._run(DJANGO_SUPERUSER_USERNAME="", DJANGO_SUPERUSER_PASSWORD="")
         self.assertEqual(get_user_model().objects.count(), 0)
+
+
+class OrderTests(TestCase):
+    def setUp(self):
+        cache.clear()
+
+    def _order(self, **extra):
+        data = {
+            "services": ["domain", "hosting"], "domain_name": "https://www.MyShop.co.ke/",
+            "name": "Wanjiru", "email": "w@example.com", "phone": "0712345678", "website": "",
+        }  # fmt: skip
+        data.update(extra)
+        return self.client.post(reverse("order"), data)
+
+    def test_order_is_saved_emailed_and_shows_till(self):
+        from .models import Order
+
+        with self.settings(CONTACT_NOTIFY_EMAIL="info@nabec.co.ke"):
+            response = self._order()
+        o = Order.objects.get()
+        self.assertEqual(o.domain_name, "myshop.co.ke")
+        self.assertEqual(o.services, "domain,hosting")
+        self.assertTrue(o.reference.startswith("NB-"))
+        self.assertRedirects(response, reverse("order_detail", args=[o.token]))
+        page = self.client.get(reverse("order_detail", args=[o.token]))
+        self.assertContains(page, o.reference)
+        self.assertContains(page, "1790136")
+        self.assertEqual(page["X-Robots-Tag"], "noindex, nofollow")
+        self.assertIn(o.reference, mail.outbox[0].subject)
+
+    def test_payment_code_is_recorded(self):
+        from .models import Order
+
+        self._order()
+        o = Order.objects.get()
+        url = reverse("order_detail", args=[o.token])
+        bad = self.client.post(url, {"mpesa_code": "not a code"})
+        self.assertContains(bad, "10 letters and numbers")
+        self.client.post(url, {"mpesa_code": "sjk4a2b9xy"})
+        o.refresh_from_db()
+        self.assertEqual((o.mpesa_code, o.status), ("SJK4A2B9XY", "payment_sent"))
+
+    def test_domain_required_when_ordering_a_domain_and_validated(self):
+        from .models import Order
+
+        self.assertContains(self._order(domain_name=""), "the domain name you")
+        self.assertContains(self._order(domain_name="my shop.co.ke"), "Enter a domain like")
+        self.assertEqual(Order.objects.count(), 0)
+
+    def test_unknown_order_link_is_404_and_honeypot_blocks(self):
+        from .models import Order
+
+        self.assertEqual(self.client.get(reverse("order_detail", args=["nope"])).status_code, 404)
+        self._order(website="http://spam.example")
+        self.assertEqual(Order.objects.count(), 0)
+
+    def test_package_link_preselects_package(self):
+        pkg = Package.objects.get(name="Web Hosting")
+        response = self.client.get(reverse("order") + f"?package={pkg.pk}")
+        self.assertContains(response, f'<option value="{pkg.pk}" selected>')
 

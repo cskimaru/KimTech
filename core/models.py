@@ -1,3 +1,6 @@
+import secrets
+import string
+
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
@@ -180,3 +183,68 @@ class ContactMessage(TimestampedModel):
 
     def __str__(self):
         return f"{self.name} <{self.email}> — {self.get_service_interest_display()}"
+
+
+def _new_reference():
+    alphabet = string.ascii_uppercase.replace("O", "").replace("I", "") + "23456789"
+    return "NB-" + "".join(secrets.choice(alphabet) for _ in range(6))
+
+
+def _new_token():
+    return secrets.token_urlsafe(24)
+
+
+class Order(TimestampedModel):
+    """A customer's order for domains, hosting, storage or a website, paid by M-Pesa.
+
+    The customer sees it on a private page (unguessable token in the link), pays to the
+    Till number with the order reference, and enters the M-Pesa confirmation code there.
+    Nabec checks the payment, marks it paid and sets the services up.
+    """
+
+    SERVICE_CHOICES = [
+        ("domain", "Domain name"),
+        ("hosting", "Website hosting (cPanel)"),
+        ("email", "Business email"),
+        ("website", "Website design"),
+        ("memorial", "Memorial website"),
+        ("app_hosting", "App / cloud hosting (Python, Docker, VPS)"),
+        ("storage", "Cloud storage & backup"),
+        ("campaigns", "Email & SMS campaigns"),
+    ]
+    STATUS_CHOICES = [
+        ("new", "New: awaiting payment"),
+        ("payment_sent", "Payment code received: check M-Pesa"),
+        ("paid", "Paid: set up services"),
+        ("active", "Active: services delivered"),
+        ("cancelled", "Cancelled"),
+    ]
+
+    reference = models.CharField(max_length=12, unique=True, default=_new_reference, editable=False)
+    token = models.CharField(max_length=64, unique=True, default=_new_token, editable=False)
+    package = models.ForeignKey(
+        Package, on_delete=models.SET_NULL, null=True, blank=True, related_name="orders"
+    )
+    services = models.CharField(max_length=200, help_text="Comma-separated service codes.")
+    domain_name = models.CharField(max_length=253, blank=True)
+    name = models.CharField(max_length=120)
+    email = models.EmailField()
+    phone = models.CharField(max_length=40)
+    company = models.CharField(max_length=150, blank=True)
+    notes = models.TextField(max_length=3000, blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="new", db_index=True)
+    mpesa_code = models.CharField(max_length=12, blank=True)
+    amount_quoted = models.PositiveIntegerField(
+        null=True, blank=True, help_text="KES. Fill in after confirming the order with the customer."
+    )
+    internal_notes = models.TextField(blank=True, help_text="Only visible in the admin.")
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.reference} · {self.name}"
+
+    def service_labels(self):
+        labels = dict(self.SERVICE_CHOICES)
+        return [labels.get(code, code) for code in self.services.split(",") if code]
