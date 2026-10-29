@@ -10,7 +10,7 @@ before launch, not after.
 
 ## Reporting a vulnerability
 
-If you find a security issue, please email **info@nabecnetworks.co.ke**
+If you find a security issue, please email **info@nabec.co.ke**
 (placeholder — update once a real address exists) with details and, if
 possible, steps to reproduce. Please do not open a public GitHub issue for
 suspected vulnerabilities.

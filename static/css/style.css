@@ -1,15 +1,18 @@
 :root {
-  --color-ink: #0b1b2b;
-  --color-ink-soft: #3a4a5a;
+  /* Cool technology palette: deep navy, electric blue, indigo and cyan (matches the logo). */
+  --color-ink: #0b1220;
+  --color-ink-soft: #334155;
   --color-muted: #64748b;
   --color-border: #e2e8f0;
   --color-bg: #ffffff;
-  --color-bg-alt: #f4f7fb;
-  --color-primary: #0f4c81;
-  --color-primary-dark: #0a3a63;
-  --color-accent: #12b886;
-  --radius: 10px;
-  --shadow: 0 4px 20px rgba(11, 27, 43, 0.08);
+  --color-bg-alt: #f3f6fc;
+  --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-accent: #06b6d4;
+  --color-violet: #4f46e5;
+  --gradient-brand: linear-gradient(120deg, #4f46e5, #2563eb 55%, #06b6d4);
+  --radius: 12px;
+  --shadow: 0 6px 24px rgba(15, 23, 42, 0.08);
   --max-width: 1160px;
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
@@ -346,3 +349,40 @@ a:hover { text-decoration: underline; }
   .footer-grid { grid-template-columns: 1fr; }
   .cta-band { margin: 0 1rem; }
 }
+
+/* ---- Brand logo and technology styling ---- */
+.brand-logo { width: 38px; height: 38px; display: block; }
+.site-footer .brand-logo { width: 34px; height: 34px; }
+
+.btn-primary { background: var(--gradient-brand); box-shadow: 0 8px 22px -12px rgba(37, 99, 235, 0.8); }
+.btn-primary:hover { background: var(--gradient-brand); filter: brightness(1.08); }
+.eyebrow { color: var(--color-violet); }
+.badge { background: var(--color-accent); }
+
+/* Hero: deep navy with indigo and cyan glows over a faint network grid */
+.hero {
+  background:
+    radial-gradient(circle at 12% 10%, rgba(79, 70, 229, 0.45), transparent 42%),
+    radial-gradient(circle at 88% 85%, rgba(6, 182, 212, 0.35), transparent 45%),
+    linear-gradient(rgba(148, 163, 184, 0.07) 1px, transparent 1px) 0 0 / 44px 44px,
+    linear-gradient(90deg, rgba(148, 163, 184, 0.07) 1px, transparent 1px) 0 0 / 44px 44px,
+    #0b1220;
+  border-bottom: 0;
+}
+.hero h1 { color: #fff; }
+.hero p, .hero .lead { color: #cbd5e1; }
+.hero .eyebrow { color: #67e8f9; }
+.hero .btn-outline { border-color: rgba(255, 255, 255, 0.55); color: #fff; }
+.hero .btn-outline:hover { border-color: #fff; background: rgba(255, 255, 255, 0.08); }
+
+.card { transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; }
+.card:hover { border-color: rgba(37, 99, 235, 0.35); }
+.card-featured { border-color: var(--color-primary); box-shadow: 0 10px 30px -16px rgba(37, 99, 235, 0.55); }
+.feature h3, .price { color: var(--color-primary-dark); }
+
+.cta-band { background: var(--gradient-brand); }
+.cta-band .btn-primary { background: #fff; color: var(--color-primary-dark); box-shadow: none; }
+
+.site-footer { background: #0b1220; }
+.site-footer .brand-name { color: #fff; }
+.grid + .text-center { margin-top: 2rem; }

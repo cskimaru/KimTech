@@ -122,14 +122,14 @@ EMAIL_PORT = env.int("EMAIL_PORT", default=587)
 EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
 EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", default=True)
-DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="Nabec Networks Connection <no-reply@nabecnetworks.co.ke>")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="Nabec Networks Connection <info@nabec.co.ke>")
 CONTACT_NOTIFY_EMAIL = env("CONTACT_NOTIFY_EMAIL", default="")
 
 # --- Nabec Networks Connection company info, used by templates via a context processor ---
 COMPANY_NAME = "Nabec Networks Connection"
 COMPANY_LOCATION = "Nairobi, Kenya"
 COMPANY_TAGLINE = "Multi-Cloud Engineering & Data Protection, Delivered as a Service"
-COMPANY_EMAIL = env("CONTACT_NOTIFY_EMAIL", default="info@nabecnetworks.co.ke")
+COMPANY_EMAIL = env("CONTACT_NOTIFY_EMAIL", default="info@nabec.co.ke")
 COMPANY_PHONES = ["+254 702 857 036", "+81 70-5659-9911"]
 
 LOGIN_URL = "admin:login"
