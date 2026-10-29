@@ -426,3 +426,97 @@ a:hover { text-decoration: underline; }
 @media (max-width: 900px) {
   .split { grid-template-columns: 1fr; }
 }
+
+/* ---- Atmosphere: soft indigo, blue, cyan and violet light washes instead of flat white ---- */
+body { background: #f6f8ff; }
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(40rem 30rem at 4% 8%, rgba(99, 102, 241, 0.34), transparent 70%),
+    radial-gradient(36rem 28rem at 98% 18%, rgba(6, 182, 212, 0.34), transparent 70%),
+    radial-gradient(42rem 32rem at 90% 78%, rgba(168, 85, 247, 0.26), transparent 70%),
+    radial-gradient(44rem 32rem at 6% 96%, rgba(37, 99, 235, 0.28), transparent 70%),
+    radial-gradient(rgba(37, 99, 235, 0.10) 1px, transparent 1.4px) 0 0 / 26px 26px;
+  animation: drift 40s ease-in-out infinite alternate;
+}
+@keyframes drift { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(-2%, 1.5%, 0) scale(1.05); } }
+
+/* Sections let the washes show through; alternate sections get a light tint */
+.section { background: transparent; }
+.section-alt { background: linear-gradient(120deg, rgba(224, 231, 255, 0.85), rgba(207, 250, 254, 0.7) 60%, rgba(243, 232, 255, 0.75)); }
+
+/* Glassy cards with a soft coloured glow on hover */
+.card {
+  background: rgba(255, 255, 255, 0.78);
+  border-color: rgba(99, 102, 241, 0.14);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+.card:hover { transform: translateY(-3px); box-shadow: 0 18px 40px -22px rgba(79, 70, 229, 0.55); }
+.card-highlight { background: linear-gradient(160deg, rgba(238, 242, 255, 0.95), rgba(236, 254, 255, 0.95)); }
+
+/* Headings with a gradient underline accent */
+.section-title::after, .page-header h1::after {
+  content: ""; display: block; width: 64px; height: 4px; border-radius: 4px; margin: 0.8rem auto 0;
+  background: var(--gradient-brand);
+}
+.page-header h1::after { margin-left: 0; }
+
+/* Inner pages: a soft gradient banner instead of a white header */
+.page-header {
+  background:
+    radial-gradient(30rem 18rem at 0% 0%, rgba(99, 102, 241, 0.18), transparent 70%),
+    radial-gradient(30rem 18rem at 100% 100%, rgba(6, 182, 212, 0.18), transparent 70%);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.12);
+}
+
+/* Hero: slowly moving glows */
+.hero { position: relative; overflow: hidden; }
+.hero::after {
+  content: ""; position: absolute; inset: -30%; pointer-events: none;
+  background:
+    radial-gradient(closest-side at 30% 40%, rgba(99, 102, 241, 0.35), transparent),
+    radial-gradient(closest-side at 70% 60%, rgba(6, 182, 212, 0.28), transparent);
+  animation: glow 18s ease-in-out infinite alternate;
+}
+.hero .container { position: relative; z-index: 1; }
+@keyframes glow { from { transform: translate3d(-4%, -3%, 0); } to { transform: translate3d(5%, 4%, 0); } }
+.hero h1 { background: linear-gradient(90deg, #ffffff 20%, #a5f3fc 60%, #c7d2fe); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* Header turns glassy over the washes */
+.site-header { background: rgba(255, 255, 255, 0.78); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+
+/* Pricing cards: featured one glows */
+.card-featured { box-shadow: 0 20px 44px -22px rgba(37, 99, 235, 0.7); }
+
+@media (prefers-reduced-motion: reduce) {
+  body::before, .hero::after { animation: none; }
+  .card:hover { transform: none; }
+}
+
+/* Dark "tech" band: navy with glows and a faint grid, glass cards */
+.section-dark {
+  position: relative; overflow: hidden; color: #e2e8f0;
+  background:
+    radial-gradient(circle at 85% 15%, rgba(6, 182, 212, 0.35), transparent 40%),
+    radial-gradient(circle at 10% 90%, rgba(79, 70, 229, 0.45), transparent 45%),
+    linear-gradient(rgba(148, 163, 184, 0.07) 1px, transparent 1px) 0 0 / 44px 44px,
+    linear-gradient(90deg, rgba(148, 163, 184, 0.07) 1px, transparent 1px) 0 0 / 44px 44px,
+    #0b1220;
+}
+.section-dark h2, .section-dark h3 { color: #fff; }
+.section-dark p { color: #cbd5e1; }
+.section-dark .eyebrow { color: #67e8f9; }
+.section-dark .card { background: rgba(255, 255, 255, 0.06); border-color: rgba(148, 163, 184, 0.22); box-shadow: none; }
+.section-dark .card:hover { border-color: rgba(103, 232, 249, 0.55); box-shadow: 0 0 0 1px rgba(103, 232, 249, 0.25), 0 20px 40px -20px rgba(6, 182, 212, 0.6); }
+.section-dark .btn-outline { border-color: rgba(255, 255, 255, 0.55); color: #fff; }
+.section-dark .btn-outline:hover { border-color: #fff; background: rgba(255, 255, 255, 0.08); }
+
+/* Colourful icon tiles, one tint per card */
+.grid > .card:nth-child(3n+1) .icon-tile { background: linear-gradient(135deg, rgba(99, 102, 241, 0.22), rgba(99, 102, 241, 0.08)); }
+.grid > .card:nth-child(3n+2) .icon-tile { background: linear-gradient(135deg, rgba(6, 182, 212, 0.24), rgba(6, 182, 212, 0.08)); }
+.grid > .card:nth-child(3n) .icon-tile { background: linear-gradient(135deg, rgba(168, 85, 247, 0.22), rgba(168, 85, 247, 0.08)); }
+/* Thin gradient line along the top of each light card */
+.card { position: relative; }
+.card::before { content: ""; position: absolute; left: 14px; right: 14px; top: 0; height: 3px; border-radius: 0 0 3px 3px; background: var(--gradient-brand); opacity: 0; transition: opacity 0.2s ease; }
+.card:hover::before { opacity: 1; }
+.badge { z-index: 1; }
