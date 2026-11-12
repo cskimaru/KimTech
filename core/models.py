@@ -248,3 +248,78 @@ class Order(TimestampedModel):
     def service_labels(self):
         labels = dict(self.SERVICE_CHOICES)
         return [labels.get(code, code) for code in self.services.split(",") if code]
+
+
+class AffiliateLink(TimestampedModel):
+    """An outgoing product link used in guides, served through /go/<slug>/.
+
+    Guides always link to /go/<slug>/, never straight to the product. That way the real
+    destination is set in one place: point it at the product's normal website at first,
+    then paste in your personal affiliate link (and tick is_affiliate) once the program
+    has approved you. Every guide that mentions the product starts earning at once.
+    """
+
+    name = models.CharField(max_length=120)
+    slug = models.SlugField(
+        max_length=60,
+        unique=True,
+        help_text="Used in guide text as /go/<slug>/, e.g. /go/semrush/.",
+    )
+    destination_url = models.URLField(
+        max_length=500,
+        help_text="Where visitors are sent. Your affiliate link once you have one, else the product's site.",
+    )
+    is_affiliate = models.BooleanField(
+        default=False,
+        help_text="Tick once destination_url is your own affiliate/referral link (we may earn a commission).",
+    )
+    is_active = models.BooleanField(
+        default=True,
+        help_text="Untick to stop the link working (visitors get a 404).",
+    )
+    clicks = models.PositiveIntegerField(default=0, editable=False)
+    notes = models.TextField(
+        blank=True,
+        help_text="Private: program name, login/dashboard URL, commission terms, payout details.",
+    )
+
+    class Meta:
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("affiliate_redirect", kwargs={"slug": self.slug})
+
+
+class Article(TimestampedModel):
+    """A guide/blog post on the Guides page.
+
+    The body uses a small, safe text format (see core/markup.py): blank lines separate
+    paragraphs, "## " starts a heading, "- " starts a bullet, **bold**, and
+    [link text](/go/semrush/) for links. Raw HTML is shown as text, never run.
+    """
+
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=220, unique=True, blank=True)
+    summary = models.CharField(
+        max_length=300, help_text="One or two sentences, shown on the Guides list and in search results."
+    )
+    body = models.TextField()
+    published_at = models.DateField(help_text="Shown on the guide. Guides dated in the future stay hidden.")
+    is_published = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["-published_at", "-id"]
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)[:220]
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("article_detail", kwargs={"slug": self.slug})

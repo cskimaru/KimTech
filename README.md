@@ -18,11 +18,30 @@ relationship with that vendor.
 - **Partnerships** — a hub listing each vendor Nabec Networks Connection is pursuing a partnership with, plus a detail page per vendor (engagement models, benefits, packages) that clearly flags "not yet formalized" status until it's real
 - **Packages & Pricing** — packaged SME offerings across all vendors
 - **Contact** — a working contact form (saved to the database + optional email notification, with spam honeypot protection)
-- **Privacy Policy**
+- **Guides** (`/guides/`) — articles for small businesses, some with affiliate links (see below)
+- **Affiliate Disclosure** and **Privacy Policy**
 
 Services, Partners (with their benefits, engagement models) and Packages are
 all editable through the Django admin (`/admin/`) — no code changes needed to
 update copy, pricing, or a partner's status once a relationship becomes real.
+
+## Guides and affiliate links
+
+Guides are written in the admin (**Articles**). The body uses a small, safe text
+format: a blank line between paragraphs, `## ` for a heading, `- ` for bullets,
+`**bold**`, and `[link text](/go/semrush/)` for links. HTML is shown as text, never run.
+
+Product links in guides always point at `/go/<slug>/`, never straight at the product.
+Each slug is an **Affiliate link** in the admin, which holds the real destination and
+counts clicks. To start earning from a product:
+
+1. Join its affiliate program (Semrush's runs on Impact).
+2. In the admin, open **Affiliate links → Semrush**, paste your affiliate URL into
+   *Destination URL* and tick *Is affiliate*.
+
+Every guide that links to `/go/semrush/` then earns commission. Until then the link
+just goes to the product's normal website. `/go/` is kept out of search engines, and
+guides with `/go/` links show an affiliate notice at the top.
 
 ## Local development
 

@@ -1,6 +1,8 @@
 from django.contrib import admin
 
 from .models import (
+    AffiliateLink,
+    Article,
     ContactMessage,
     Order,
     EngagementModel,
@@ -90,3 +92,27 @@ class OrderAdmin(admin.ModelAdmin):
             return "-"
         url = reverse("order_detail", kwargs={"token": obj.token})
         return format_html('<a href="{}" target="_blank" rel="noopener">{}</a> (send this link to the customer if they lose it)', url, url)
+
+
+@admin.register(AffiliateLink)
+class AffiliateLinkAdmin(admin.ModelAdmin):
+    list_display = ("name", "slug", "is_affiliate", "is_active", "clicks", "updated_at")
+    list_editable = ("is_affiliate", "is_active")
+    list_filter = ("is_affiliate", "is_active")
+    search_fields = ("name", "slug", "destination_url", "notes")
+    readonly_fields = ("clicks", "link_to_use", "created_at", "updated_at")
+    fields = ("name", "slug", "destination_url", "is_affiliate", "is_active", "link_to_use", "clicks", "notes", "created_at", "updated_at")
+
+    @admin.display(description="Use in guides as")
+    def link_to_use(self, obj):
+        return f"[{obj.name}](/go/{obj.slug}/)" if obj.slug else "-"
+
+
+@admin.register(Article)
+class ArticleAdmin(admin.ModelAdmin):
+    list_display = ("title", "published_at", "is_published", "updated_at")
+    list_editable = ("is_published",)
+    list_filter = ("is_published",)
+    prepopulated_fields = {"slug": ("title",)}
+    search_fields = ("title", "summary", "body")
+    date_hierarchy = "published_at"

@@ -32,6 +32,7 @@
         <a href="{% url 'services' %}"{% if page == 'services' %} class="is-current" aria-current="page"{% endif %}>Services</a>
         <a href="{% url 'partnerships' %}"{% if page == 'partnerships' or page == 'partner_detail' %} class="is-current" aria-current="page"{% endif %}>Partnerships</a>
         <a href="{% url 'packages' %}"{% if page == 'packages' %} class="is-current" aria-current="page"{% endif %}>Packages</a>
+        <a href="{% url 'articles' %}"{% if page == 'articles' or page == 'article_detail' %} class="is-current" aria-current="page"{% endif %}>Guides</a>
         <a href="{% url 'about' %}"{% if page == 'about' %} class="is-current" aria-current="page"{% endif %}>About</a>
         {% endwith %}
         <a href="{% url 'contact' %}"{% if request.resolver_match.url_name == 'contact' %} class="is-current" aria-current="page"{% endif %}>Contact</a>
@@ -68,6 +69,7 @@
         <a href="{% url 'services' %}">Services</a>
         <a href="{% url 'partnerships' %}">Partnerships</a>
         <a href="{% url 'packages' %}">Packages &amp; Pricing</a>
+        <a href="{% url 'articles' %}">Guides</a>
       </div>
       <div>
         <h3>Get in touch</h3>
@@ -82,6 +84,7 @@
       <div>
         <h3>Legal</h3>
         <a href="{% url 'privacy_policy' %}">Privacy Policy</a>
+        <a href="{% url 'affiliate_disclosure' %}">Affiliate Disclosure</a>
       </div>
     </div>
     <div class="container footer-bottom">

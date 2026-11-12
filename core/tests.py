@@ -7,7 +7,10 @@ from .middleware import (
     ADMIN_LOGIN_MAX_ATTEMPTS,
     admin_login_throttle_key,
 )
-from .models import ContactMessage, EngagementModel, Package, Partner, Service
+import datetime
+
+from .markup import render_article
+from .models import AffiliateLink, Article, ContactMessage, EngagementModel, Package, Partner, Service
 
 
 class PublicPagesTests(TestCase):
@@ -351,3 +354,58 @@ class OrderTests(TestCase):
         response = self.client.get(reverse("order") + f"?package={pkg.pk}")
         self.assertContains(response, f'<option value="{pkg.pk}" selected>')
 
+
+
+class GuidesAndAffiliateLinksTests(TestCase):
+    def test_first_guide_and_semrush_link_are_seeded(self):
+        article = Article.objects.get(slug="seo-for-kenyan-small-businesses")
+        self.assertIn("/go/semrush/", article.body)
+        link = AffiliateLink.objects.get(slug="semrush")
+        self.assertFalse(link.is_affiliate)  # stays off until a real affiliate link is pasted in
+
+    def test_guides_list_and_detail(self):
+        response = self.client.get(reverse("articles"))
+        self.assertContains(response, "SEO for Kenyan small businesses")
+        response = self.client.get(reverse("article_detail", kwargs={"slug": "seo-for-kenyan-small-businesses"}))
+        self.assertContains(response, "some links in this guide are affiliate links")
+        self.assertContains(response, 'href="/go/semrush/" rel="sponsored nofollow noopener"')
+        self.assertContains(response, "Affiliate Disclosure")
+
+    def test_unpublished_and_future_guides_are_hidden(self):
+        Article.objects.create(title="Draft", summary="x", body="x", published_at=datetime.date(2020, 1, 1), is_published=False)
+        Article.objects.create(title="Future", summary="x", body="x", published_at=datetime.date(2999, 1, 1))
+        listing = self.client.get(reverse("articles"))
+        self.assertNotContains(listing, "Draft")
+        self.assertNotContains(listing, "Future")
+        self.assertEqual(self.client.get(reverse("article_detail", kwargs={"slug": "future"})).status_code, 404)
+
+    def test_go_link_redirects_and_counts_clicks(self):
+        response = self.client.get(reverse("affiliate_redirect", kwargs={"slug": "semrush"}))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response["Location"], "https://www.semrush.com/")
+        self.assertEqual(response["X-Robots-Tag"], "noindex, nofollow")
+        self.assertEqual(AffiliateLink.objects.get(slug="semrush").clicks, 1)
+
+    def test_inactive_or_unknown_go_link_is_404(self):
+        AffiliateLink.objects.filter(slug="semrush").update(is_active=False)
+        self.assertEqual(self.client.get("/go/semrush/").status_code, 404)
+        self.assertEqual(self.client.get("/go/nope/").status_code, 404)
+
+    def test_markup_escapes_html_and_rejects_unsafe_links(self):
+        html = render_article('<script>alert(1)</script>\n\n[bad](javascript:alert(1)) [ok](https://example.com)')
+        self.assertNotIn("<script>", html)
+        self.assertIn("&lt;script&gt;", html)
+        self.assertNotIn('href="javascript', html)
+        self.assertIn('<a href="https://example.com" rel="noopener" target="_blank">ok</a>', html)
+
+    def test_markup_headings_lists_and_bold(self):
+        html = render_article("## Title\n\n- one\n- **two**\n\nPlain text\nwraps.")
+        self.assertIn("<h2>Title</h2>", html)
+        self.assertIn("<ul><li>one</li><li><strong>two</strong></li></ul>", html)
+        self.assertIn("<p>Plain text wraps.</p>", html)
+
+    def test_sitemap_robots_and_disclosure(self):
+        sitemap = self.client.get("/sitemap.xml")
+        self.assertContains(sitemap, "/guides/seo-for-kenyan-small-businesses/")
+        self.assertContains(self.client.get("/robots.txt"), "Disallow: /go/")
+        self.assertEqual(self.client.get(reverse("affiliate_disclosure")).status_code, 200)

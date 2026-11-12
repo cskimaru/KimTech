@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load article_markup %}
+{% block title %}{{ article.title }} — {{ COMPANY_NAME }}{% endblock %}
+{% block meta_description %}{{ article.summary }}{% endblock %}
+
+{% block content %}
+<section class="section page-header">
+  <div class="container">
+    <a class="eyebrow" href="{% url 'articles' %}">Guides</a>
+    <h1>{{ article.title }}</h1>
+    <p class="lead">{{ article.summary }}</p>
+    <p class="muted">{{ COMPANY_NAME }} · {{ article.published_at|date:"j F Y" }}{% if article.updated_at|date:"Ymd" > article.published_at|date:"Ymd" %} · updated {{ article.updated_at|date:"j F Y" }}{% endif %}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container prose">
+    {% if has_affiliate_links %}
+    <div class="callout callout-info">
+      <strong>Heads up:</strong> some links in this guide are affiliate links. If you buy
+      through them we may earn a commission, at no extra cost to you. It never changes what
+      we recommend. <a href="{% url 'affiliate_disclosure' %}">Read our disclosure</a>.
+    </div>
+    {% endif %}
+
+    {{ article.body|article_markup }}
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container text-center">
+    <h2>Want us to set it up for you?</h2>
+    <p class="lead lead-centered">We build websites, register domains and set up business email for Kenyan businesses, payable by M-Pesa.</p>
+    <div class="cta-row cta-row-center">
+      <a class="btn btn-primary" href="{% url 'order' %}">Order online</a>
+      <a class="btn btn-outline" href="{% url 'contact' %}">Ask us a question</a>
+    </div>
+  </div>
+</section>
+
+{% if more_articles %}
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">More guides</h2>
+    <div class="grid grid-3">
+      {% for other in more_articles %}
+      <article class="card">
+        <h3><a href="{{ other.get_absolute_url }}">{{ other.title }}</a></h3>
+        <p>{{ other.summary }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}
