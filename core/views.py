@@ -4,12 +4,16 @@ from django.contrib import messages
 from django.core.cache import cache
 from django.core.mail import send_mail
 from django.conf import settings
+from django.db.models import F
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
 from django.urls import reverse
 
 from .forms import ContactForm, OrderForm, PaymentCodeForm
 from .middleware import get_client_ip
-from .models import ContactMessage, Order, Package, Partner, Service
+from .markup import has_affiliate_links
+from .models import AffiliateLink, Article, ContactMessage, Order, Package, Partner, Service
 
 logger = logging.getLogger(__name__)
 
@@ -189,6 +193,40 @@ def order_detail(request, token):
     response["X-Robots-Tag"] = "noindex, nofollow"  # private page: the link is the customer's key
     response["Cache-Control"] = "private, no-store"
     return response
+
+
+def published_articles():
+    return Article.objects.filter(is_published=True, published_at__lte=timezone.localdate())
+
+
+def articles(request):
+    return render(request, "core/articles.html", {"articles": published_articles()})
+
+
+def article_detail(request, slug):
+    article = get_object_or_404(published_articles(), slug=slug)
+    context = {
+        "article": article,
+        "has_affiliate_links": has_affiliate_links(article.body),
+        "more_articles": published_articles().exclude(pk=article.pk)[:3],
+    }
+    return render(request, "core/article_detail.html", context)
+
+
+def affiliate_redirect(request, slug):
+    """Send the visitor on to the product, counting the click. /go/ is kept out of search."""
+    link = AffiliateLink.objects.filter(slug=slug, is_active=True).first()
+    if link is None:
+        raise Http404
+    AffiliateLink.objects.filter(pk=link.pk).update(clicks=F("clicks") + 1)
+    response = redirect(link.destination_url)
+    response["X-Robots-Tag"] = "noindex, nofollow"
+    response["Cache-Control"] = "no-store"
+    return response
+
+
+def affiliate_disclosure(request):
+    return render(request, "core/affiliate_disclosure.html")
 
 
 def privacy_policy(request):

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Affiliate Disclosure — {{ COMPANY_NAME }}{% endblock %}
+
+{% block content %}
+<section class="section page-header">
+  <div class="container">
+    <span class="eyebrow">Legal</span>
+    <h1>Affiliate Disclosure</h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container prose">
+    <p>Some of the guides on this website recommend software and online services, such as
+    SEO tools, web hosting and design tools. Some of the links to those products are
+    <strong>affiliate links</strong>. If you click one and then buy, start a trial or sign up,
+    the company may pay {{ COMPANY_NAME }} a commission.</p>
+
+    <h2>What this means for you</h2>
+    <p>You pay the same price whether or not you use our link. Commissions help us keep
+    writing free guides for small businesses.</p>
+
+    <h2>How we choose what to recommend</h2>
+    <p>We only recommend products we believe are a good fit for the reader, and we say so
+    when a free option is good enough. A commission never decides what we recommend, and
+    guides that contain affiliate links say so at the top.</p>
+
+    <h2>How the links work</h2>
+    <p>Product links in our guides go through an address on our own site that starts with
+    <code>/go/</code>, which then sends you on to the product's website. We count how many
+    times each link is clicked, but we don't record who clicked it. The product's company or
+    its affiliate network may set a cookie in your browser so that they can credit us if you
+    buy. Their own privacy policies apply on their websites.</p>
+
+    <h2>Questions</h2>
+    <p>Email us at <a href="mailto:{{ COMPANY_EMAIL }}">{{ COMPANY_EMAIL }}</a> or use our
+    <a href="{% url 'contact' %}">contact form</a>.</p>
+  </div>
+</section>
+{% endblock %}

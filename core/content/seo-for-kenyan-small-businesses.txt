@@ -1,0 +1,61 @@
+Most small businesses in Kenya don't need to spend money to start showing up on Google. They need a few free tools, used properly, and a bit of patience. This guide shows you what to do first, and when a paid tool like Semrush starts to pay for itself.
+
+## Step 1: Get on Google Maps with a free Business Profile
+
+When someone searches "printing shop Westlands" or "hardware near me", Google shows a map with three businesses before any websites. Those come from Google Business Profile, and it's free.
+
+- Create or claim your profile at [Google Business Profile](https://www.google.com/business/).
+- Use your real business name, the exact location customers visit, your phone number and your opening hours.
+- Add photos of your shop, your products and your team. Profiles with photos get far more calls.
+- Ask happy customers to leave a review, and reply to every review, good or bad.
+
+For many shops, salons, clinics and restaurants, this one step brings in more customers than a website.
+
+## Step 2: Have a simple website on your own domain
+
+A website on your own name (for example yourbusiness.co.ke) tells customers and Google that you're a real, established business. It doesn't need to be big. Five pages are enough: Home, Services or Products, About, Prices, and Contact with your phone, WhatsApp and location.
+
+If you don't have one yet, we can [register your domain and build the site for you](/order/), payable by M-Pesa.
+
+## Step 3: Connect Google Search Console (free)
+
+[Google Search Console](https://search.google.com/search-console/about) shows you which searches your website already appears for, how many people click, and any problems stopping Google from reading your pages. Add your site, submit your sitemap, and check it once a month. It's the most accurate free data you'll get, because it comes straight from Google.
+
+## Step 4: Write pages that answer what customers search for
+
+Think about the exact words your customers type. A Nairobi customer might search "cheap web hosting Kenya", "how much is a .co.ke domain" or "best bakery in Kilimani". Give each important question its own clear page or guide, use those words naturally in the title and first paragraph, and include your prices if you can. Prices are one of the things people search for most.
+
+## When is a paid SEO tool worth it?
+
+Free tools tell you about your own website. They don't show you what your competitors rank for, which keywords bring them traffic, or which websites link to them. That's what tools like Semrush are for.
+
+[Semrush](/go/semrush/) is one of the best-known SEO tools. It does keyword research, tracks where your pages rank on Google, audits your website for technical problems, and shows you what's working for competitors. Newer plans also track whether your business is mentioned in AI answers from tools like ChatGPT and Gemini.
+
+It isn't cheap. As of mid-2026, the SEO-only Pro plan was listed at about **$139.95 a month**, and the newer Semrush One plans started at about **$199 a month**. Paying yearly saves around 17%. Check the current price on their site before you buy, because it changes.
+
+### Start with the free account
+
+Semrush has a free account with a daily limit of about 10 searches across its tools, plus one project. That's enough to:
+
+- Look up the main keywords for your business and see roughly how many people search for them.
+- Check one or two competitors and see which of their pages bring in the most visitors.
+- Run a small audit of your own website.
+
+You can [create a free Semrush account here](/go/semrush/). If you hit the limits often, there's a free trial of the paid plans, usually 7 days. Note that it normally needs a card and turns into a paid plan unless you cancel in time.
+
+### Pay for it when...
+
+- SEO is bringing you real customers and you want more, or
+- you manage SEO for several clients and charge them for it, or
+- you're publishing new content every week and need to know what to write next.
+
+If you're a small shop that mostly needs local customers to find you, the free tools in steps 1 to 4 will take you a long way. Spend the money on a good website and good photos first.
+
+## A simple monthly routine
+
+- Reply to new Google reviews and add a few fresh photos.
+- Look at Search Console: which searches got you clicks this month?
+- Improve one existing page or write one new page that answers a customer question.
+- If you use Semrush, check your rankings and one competitor.
+
+Do this every month and you'll be ahead of most businesses in your area. If you'd like help with any of it, [get in touch](/contact/).

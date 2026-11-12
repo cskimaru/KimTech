@@ -5,10 +5,10 @@ from django.contrib.sitemaps.views import sitemap
 from django.urls import path
 from django.views.generic import RedirectView, TemplateView
 
-from core.sitemaps import PartnerSitemap, StaticViewSitemap
+from core.sitemaps import ArticleSitemap, PartnerSitemap, StaticViewSitemap
 from core import views
 
-sitemaps = {"static": StaticViewSitemap, "partners": PartnerSitemap}
+sitemaps = {"static": StaticViewSitemap, "partners": PartnerSitemap, "guides": ArticleSitemap}
 
 urlpatterns = [
     path(f"{settings.ADMIN_URL}/", admin.site.urls),
@@ -26,6 +26,10 @@ urlpatterns = [
     path("contact/", views.contact, name="contact"),
     path("order/", views.order, name="order"),
     path("order/<str:token>/", views.order_detail, name="order_detail"),
+    path("guides/", views.articles, name="articles"),
+    path("guides/<slug:slug>/", views.article_detail, name="article_detail"),
+    path("go/<slug:slug>/", views.affiliate_redirect, name="affiliate_redirect"),
+    path("affiliate-disclosure/", views.affiliate_disclosure, name="affiliate_disclosure"),
     path("privacy-policy/", views.privacy_policy, name="privacy_policy"),
     path(
         "sitemap.xml",

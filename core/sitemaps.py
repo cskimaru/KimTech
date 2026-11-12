@@ -1,7 +1,9 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
-from .models import Partner
+from django.utils import timezone
+
+from .models import Article, Partner
 
 
 class StaticViewSitemap(Sitemap):
@@ -17,6 +19,8 @@ class StaticViewSitemap(Sitemap):
             "packages",
             "contact",
             "order",
+            "articles",
+            "affiliate_disclosure",
             "privacy_policy",
         ]
 
@@ -36,3 +40,14 @@ class PartnerSitemap(Sitemap):
 
     def lastmod(self, partner):
         return partner.updated_at
+
+
+class ArticleSitemap(Sitemap):
+    changefreq = "monthly"
+    priority = 0.6
+
+    def items(self):
+        return Article.objects.filter(is_published=True, published_at__lte=timezone.localdate())
+
+    def lastmod(self, article):
+        return article.updated_at

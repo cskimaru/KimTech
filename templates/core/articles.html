@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Guides — {{ COMPANY_NAME }}{% endblock %}
+{% block meta_description %}Practical guides for Kenyan small businesses on getting online, getting found on Google, and choosing the right tools — from {{ COMPANY_NAME }}.{% endblock %}
+
+{% block content %}
+<section class="section page-header">
+  <div class="container">
+    <span class="eyebrow">Guides</span>
+    <h1>Practical guides for getting your business online.</h1>
+    <p class="lead">Plain-language advice on websites, getting found on Google, and the tools
+    worth paying for, written for small businesses in Kenya and East Africa.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    {% if articles %}
+    <div class="grid grid-3">
+      {% for article in articles %}
+      <article class="card guide-card">
+        <p class="muted">{{ article.published_at|date:"j F Y" }}</p>
+        <h2><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h2>
+        <p>{{ article.summary }}</p>
+        <a class="link-arrow" href="{{ article.get_absolute_url }}">Read the guide</a>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="muted">New guides are on the way. Check back soon.</p>
+    {% endif %}
+    <p class="muted guides-note"><small>Some guides contain affiliate links. See our <a href="{% url 'affiliate_disclosure' %}">affiliate disclosure</a>.</small></p>
+  </div>
+</section>
+{% endblock %}
